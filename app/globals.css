@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -121,71 +121,70 @@
   }
 }
 
-
 @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-      font-size: var(--font-size-base);
-      font-family: var(--font-family);
-    }
-  
-    /* Apply spacing based on the spacing variable */
-    .space-y-8 > * + * {
-      margin-top: calc(2rem * var(--spacing-base) / 100);
-    }
-  
-    .p-8 {
-      padding: calc(2rem * var(--spacing-base) / 100);
-    }
-  
-    .p-10 {
-      padding: calc(2.5rem * var(--spacing-base) / 100);
-    }
-  
-    .py-10 {
-      padding-top: calc(2.5rem * var(--spacing-base) / 100);
-      padding-bottom: calc(2.5rem * var(--spacing-base) / 100);
-    }
-  
-    .mb-4 {
-      margin-bottom: calc(1rem * var(--spacing-base) / 100);
-    }
-  
-    .mb-2 {
-      margin-bottom: calc(0.5rem * var(--spacing-base) / 100);
-    }
-  
-    .gap-2 {
-      gap: calc(0.5rem * var(--spacing-base) / 100);
-    }
-  
-    .space-y-1 > * + * {
-      margin-top: calc(0.25rem * var(--spacing-base) / 100);
-    }
+  * {
+    @apply border-border;
   }
-  
-  .bg-resume {
-    background-color: var(--bg-color);
+  body {
+    @apply bg-background text-foreground;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
   }
-  
-  .print-hidden {
-    @apply print:hidden;
+
+  /* Apply spacing based on the spacing variable */
+  .space-y-8 > * + * {
+    margin-top: calc(2rem * var(--spacing-base) / 100);
   }
-  
-  .pdf-hidden {
-    display: none !important;
+
+  .p-8 {
+    padding: calc(2rem * var(--spacing-base) / 100);
   }
-  
-  @media print {
-    @page {
-      margin: 0.5cm;
-    }
-  
-    body {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
+
+  .p-10 {
+    padding: calc(2.5rem * var(--spacing-base) / 100);
   }
+
+  .py-10 {
+    padding-top: calc(2.5rem * var(--spacing-base) / 100);
+    padding-bottom: calc(2.5rem * var(--spacing-base) / 100);
+  }
+
+  .mb-4 {
+    margin-bottom: calc(1rem * var(--spacing-base) / 100);
+  }
+
+  .mb-2 {
+    margin-bottom: calc(0.5rem * var(--spacing-base) / 100);
+  }
+
+  .gap-2 {
+    gap: calc(0.5rem * var(--spacing-base) / 100);
+  }
+
+  .space-y-1 > * + * {
+    margin-top: calc(0.25rem * var(--spacing-base) / 100);
+  }
+}
+
+.bg-resume {
+  background-color: var(--bg-color);
+}
+
+.print-hidden {
+  @apply print:hidden;
+}
+
+.pdf-hidden {
+  display: none !important;
+}
+
+@media print {
+  @page {
+    margin: 0.5cm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
