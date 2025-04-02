@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
 export function RThemeProvider({
@@ -10,10 +9,12 @@ export function RThemeProvider({
 }: React.ComponentProps<typeof NextThemesProvider>) {
     return (
         <NextThemesProvider
-            attribute="data-theme"
+            attribute="class"
             defaultTheme="light"
             enableSystem
             storageKey="resume-theme"
+            disableTransitionOnChange
+            enableColorScheme
             {...props}
         >
             {children}
