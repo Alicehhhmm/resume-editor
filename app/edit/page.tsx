@@ -1,10 +1,11 @@
-
 import { EditorLayout } from '@/components/layout'
+
+import { EditView } from '@/views/edit/view'
 
 export default function EditPage() {
     return (
         <EditorLayout>
-            <div id="resume-content">ResumeTemplate</div>
+            <EditView />
         </EditorLayout>
     )
 }
