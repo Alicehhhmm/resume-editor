@@ -6,8 +6,9 @@ import { Eye } from 'lucide-react'
 
 import { ThemeToggleBtn } from '@/components/common'
 import { Button } from '@/components/ui/button'
+import { SidebarTrigger } from '@/components/ui/sidebar'
 
-export const HeaderBar = () => {
+export const HeaderNavBar = () => {
     const router = useRouter()
 
     const handlePreviewClick = () => {
@@ -17,6 +18,7 @@ export const HeaderBar = () => {
     return (
         <div>
             <header className="border-b bg-background/80 dark:bg-background backdrop-blur-sm z-50 h-14 flex items-center px-4">
+                <SidebarTrigger />
                 <div className="flex-1 flex items-center">
                     <h1 className="text-lg font-semibold">Resume Builder</h1>
                 </div>
