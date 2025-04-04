@@ -400,7 +400,7 @@ export const CollapsedWrapper = memo(
                     <div
                         ref={contentRef}
                         className={cn(
-                            'absolute inset-0 p-4',
+                            'absolute inset-0',
                             collapsed
                                 ? 'opacity-0 pointer-events-none'
                                 : 'opacity-100'
