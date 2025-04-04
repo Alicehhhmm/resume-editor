@@ -5,10 +5,14 @@ import { useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
+import {
+    useSuspenseInfiniteQuery,
+    useSuspenseQuery,
+} from '@tanstack/react-query'
 
 import type { Category, Template } from '@/types/resume-template'
 
+import { InfiniteScroll } from '@/components/common'
 import { FilterCarousel } from '@/components/filter-carousel'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -38,16 +42,22 @@ export const TemplateView = ({ templateId }: TemplateViewProps) => {
     )
 }
 
-export const TemplateViewSuspense = () => {
+const TemplateViewSuspense = () => {
     const router = useRouter()
     const [categoryId, setCategoryId] = useState<Category>('all')
     const [selectedId, setSelectedId] = useState<string>()
 
-    // 使用 useTemplates 获取数据
-    const { data: templates } = useSuspenseQuery({
-        queryKey: ['templates'],
-        queryFn: fetchTemplates,
-    })
+    // 使用 useSuspenseInfiniteQuery 获取数据
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+        useSuspenseInfiniteQuery({
+            queryKey: ['templates'],
+            queryFn: fetchTemplates,
+            initialPageParam: 1,
+            getNextPageParam: (lastPage) => lastPage.nextPage,
+        })
+
+    // 将分页数据合并为一个数组
+    const templates = data?.pages.flatMap((page) => page.data) || []
 
     // 将 Template[] 转换为 Record<Category, Template[]>
     const templatesByCategory = templates?.reduce(
@@ -112,13 +122,19 @@ export const TemplateViewSuspense = () => {
                     selectedId={selectedId}
                     onSelect={handleTemplateSelect}
                     templates={templatesByCategory || {}}
-                />
+                >
+                    <InfiniteScroll
+                        isManual={false}
+                        hasNextPage={hasNextPage}
+                        isFetchingNextPage={isFetchingNextPage}
+                        fetchNextPage={fetchNextPage}
+                    />
+                </TemplateGrid>
             </div>
         </div>
     )
 }
-
-export const TemplateViewSkeleton = () => {
+const TemplateViewSkeleton = () => {
     return (
         <div className="h-full flex flex-col space-y-6">
             <div className="px-4 pt-4 space-y-1">

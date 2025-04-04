@@ -10,6 +10,7 @@ interface TemplateGridProps {
     selectedId?: string
     onSelect: (template: Template) => void
     templates: Record<Category, Template[]>
+    children?: React.ReactNode
 }
 
 export const TemplateGrid = ({
@@ -17,6 +18,7 @@ export const TemplateGrid = ({
     selectedId,
     onSelect,
     templates,
+    children,
 }: TemplateGridProps) => {
     const items =
         category === 'all'
@@ -40,6 +42,7 @@ export const TemplateGrid = ({
                               <Skeleton key={index} />
                           ))}
                 </div>
+                {children}
             </ScrollArea>
         </div>
     )
