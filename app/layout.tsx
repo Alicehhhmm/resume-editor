@@ -4,7 +4,7 @@ import { GEIST_MONO, GEIST_SANS } from '@/lib/font'
 import { cn } from '@/lib/utils'
 
 import { TailwindIndicator } from '@/components/common'
-import { RThemeProvider } from '@/components/provider'
+import { RThemeProvider, TanstackQueryProviders } from '@/components/provider'
 import { Toaster } from '@/components/ui/sonner'
 
 import './globals.css'
@@ -25,7 +25,9 @@ export default function RootLayout({
                 <RThemeProvider>
                     <TailwindIndicator />
                     <Toaster />
-                    {children}
+                    <TanstackQueryProviders>
+                        {children}
+                    </TanstackQueryProviders>
                 </RThemeProvider>
             </body>
         </html>

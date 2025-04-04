@@ -4,6 +4,8 @@
     "bracketSpacing": true,
     "plugins": ["@trivago/prettier-plugin-sort-imports"],
     "importOrder": [
+        "^server-only$",
+        "^Type$",
         "^['react$', 'next(.*)$']",
         "<THIRD_PARTY_MODULES>",
         "^@/types/(.*)$",
@@ -19,6 +21,7 @@
         "^[.][.]/[^/]+$",
         "^[.][.][.]/[^/]+$",
         "^[.]/.*$",
+        "^[./].*$",
         "^[.][.]/.*$",
         "^[.][.][.]/.*$",
         "^[.].*(?<!\\.(css|scss|sass|less|styl))$",
