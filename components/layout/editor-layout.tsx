@@ -2,18 +2,15 @@
 
 import type { ReactNode } from 'react'
 
-import { Draw as DrawingBoard } from '@/components/canvas'
 import {
     EditorMenuSidebar,
     HeaderNavBar,
     LeftSiderbar,
     RightSiderbar,
 } from '@/components/navigation'
-import {
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
-} from '@/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
+
+import { DrawView as DrawingBoard } from '@/views/edit/draw/view'
 
 interface EditorLayoutProps {
     children: ReactNode
