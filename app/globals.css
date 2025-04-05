@@ -119,4 +119,32 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .bg-grid-pattern {
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  /* 滚动条修改为Figma风格 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #a1a1aa;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #71717a;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
 }
