@@ -15,8 +15,9 @@ import type { Category, Template } from '@/types/resume-template'
 import { InfiniteScroll } from '@/components/common'
 import { FilterCarousel } from '@/components/filter-carousel'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useCanvas } from '@/hooks/use-canvas'
 
-import { fetchTemplates } from '@/services/templateService'
+import { fetchTemplates, saveTemplateToStorage } from '@/services/templateService'
 
 const categories = [
     { value: 'all', label: '全部' },
@@ -46,6 +47,7 @@ const TemplateViewSuspense = () => {
     const router = useRouter()
     const [categoryId, setCategoryId] = useState<Category>('all')
     const [selectedId, setSelectedId] = useState<string>()
+    const canvas = useCanvas()
 
     // 使用 useSuspenseInfiniteQuery 获取数据
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -97,6 +99,12 @@ const TemplateViewSuspense = () => {
         const params = new URLSearchParams(window.location.search)
         params.set('templateId', template.id)
         router.push(`?${params.toString()}`, { scroll: false })
+
+        // 更新Canvas状态
+        canvas.updateTemplate(template)
+        
+        // 将模板保存到存储
+        saveTemplateToStorage(template)
     }
 
     return (

@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react'
 
-// import { CanvasProviders } from '@/contexts/template-context'
-
 type DrawProps = {
     children: ReactNode
 }
