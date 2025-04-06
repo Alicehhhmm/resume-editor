@@ -7,6 +7,8 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip'
 
+export { TooltipProvider } from '@/components/ui/tooltip'
+
 interface ToolButtonProps {
     children: React.ReactNode
     tooltip: string
@@ -41,7 +43,7 @@ export const ToolButton = ({
             </TooltipTrigger>
             <TooltipContent
                 side="bottom"
-                className="text-xs py-1 px-2 bg-neutral-800 text-white border-none"
+                className="text-xs py-2 px-3 bg-neutral-800 text-white/60 border-none"
             >
                 <p>{tooltip}</p>
             </TooltipContent>

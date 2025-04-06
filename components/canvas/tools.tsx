@@ -2,35 +2,9 @@
 
 import { useCallback, useState } from 'react'
 
-import {
-    Copy,
-    Grid2X2,
-    Hand,
-    Image as ImageIcon,
-    Maximize,
-    Minus,
-    MousePointer,
-    Move,
-    Plus,
-    Redo,
-    RotateCcw,
-    Square,
-    Trash2,
-    Type,
-    Undo,
-    ZoomIn,
-    ZoomOut,
-} from 'lucide-react'
+import { Hand, Maximize, Minus, Plus, RotateCcw } from 'lucide-react'
 
-import { ActionTooltip } from '@/components/common'
-import { ToolButton } from '@/components/common/tooltip-button'
-import { Separator } from '@/components/ui/separator'
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { ToolButton,TooltipProvider } from '@/components/common/tooltip-button'
 
 import { useCanvas } from '@/hooks/use-canvas'
 
@@ -75,11 +49,7 @@ export function CanvasToolbar() {
                         <Plus className="size-3.5" />
                     </ToolButton>
 
-                    {/* TODO: 没有显示，请使用样式直接写分隔符 | */}
-                    <Separator
-                        orientation="vertical"
-                        className="h-4 bg-neutral-900"
-                    />
+                    <span className="mx-2 h-full min-h-3 w-[0.5px] bg-neutral-200" />
 
                     <ToolButton
                         tooltip="适应屏幕 (Shift+1)"
@@ -103,9 +73,6 @@ export function CanvasToolbar() {
                         <Hand className="size-3.5" />
                     </ToolButton>
                 </TooltipProvider>
-                <ActionTooltip label="抓手工具 (H)" side="top" align="center">
-                    <Hand className="size-3.5" />
-                </ActionTooltip>
             </div>
         </>
     )
