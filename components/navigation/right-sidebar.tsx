@@ -1,11 +1,20 @@
+import type { ReactNode } from 'react'
+
 import { CollapsedWrapper } from '@/components/common'
 
-export const RightSiderbar = () => {
+interface RightSiderbarProps {
+    children: ReactNode
+}
+
+export const RightSiderbar = ({ children }: RightSiderbarProps) => {
     return (
-        <div>
-            <CollapsedWrapper collapsedWidth={0} resizable position="right">
-                RightSiderbar
-            </CollapsedWrapper>
-        </div>
+        <CollapsedWrapper
+            collapsedWidth={0}
+            expandedWidth={320}
+            resizable
+            position="right"
+        >
+            {children}
+        </CollapsedWrapper>
     )
 }

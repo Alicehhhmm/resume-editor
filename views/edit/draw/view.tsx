@@ -5,9 +5,9 @@ import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { Draw as CanvasEditor } from '@/components/canvas/draw'
-import { TemplateRenderer } from '@/components/canvas/template-renderer'
 import { CanvasToolbar } from '@/components/canvas/tools'
 import { Loading } from '@/components/common'
+import { TemplateRenderer } from '@/components/template/template-renderer'
 
 export const DrawView = () => {
     return (

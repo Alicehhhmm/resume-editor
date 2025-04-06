@@ -8,10 +8,8 @@ interface LeftSiderbarProps {
 
 export const LeftSiderbar = ({ children }: LeftSiderbarProps) => {
     return (
-        <div>
-            <CollapsedWrapper collapsedWidth={0} resizable position="left">
-                {children}
-            </CollapsedWrapper>
-        </div>
+        <CollapsedWrapper collapsedWidth={0} resizable position="left">
+            {children}
+        </CollapsedWrapper>
     )
 }
