@@ -56,12 +56,15 @@ export const EditorMenuSidebar = () => {
                                 const isActive = pathname === item.url
                                 return (
                                     <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild>
+                                        <SidebarMenuButton
+                                            tooltip={item.title}
+                                            asChild
+                                        >
                                             <Link
                                                 href={item.url}
                                                 className={`flex items-center gap-4 px-4 py-2 transition-colors hover:bg-accent/50 ${
                                                     isActive
-                                                        ? 'bg-accent font-medium'
+                                                        ? 'bg-accent font-medium text-lime-500'
                                                         : 'text-muted-foreground'
                                                 }`}
                                             >
