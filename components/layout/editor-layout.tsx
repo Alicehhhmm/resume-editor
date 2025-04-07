@@ -11,7 +11,7 @@ import {
 import { SidebarProvider } from '@/components/ui/sidebar'
 
 import { DrawView as DrawingBoard } from '@/views/edit/draw/view'
-import { RightPanel as InfoPanel } from '@/views/edit/info-planes/view'
+import { RightPanel as InfoPanel } from '@/views/edit/info-panels/view'
 
 interface EditorLayoutProps {
     children: ReactNode

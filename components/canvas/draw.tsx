@@ -2,14 +2,7 @@
 
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import type {
-    CanvasElement,
-    ElementType,
-    TemplateElementProperties,
-} from '@/types/canvas'
 import { PAPER_SIZES } from '@/types/canvas'
-
-import { cn } from '@/lib/utils'
 
 import { useCanvas } from '@/hooks/use-canvas'
 
@@ -187,9 +180,7 @@ export function Draw({ children }: DrawProps) {
                 }}
                 onDoubleClick={() => {}}
             >
-        <div className="relative">
-          {children}
-        </div>
+                <div className="relative">{children}</div>
             </div>
         </div>
     )
