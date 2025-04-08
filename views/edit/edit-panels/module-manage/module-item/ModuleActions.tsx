@@ -12,7 +12,7 @@ interface ModuleActionsProps {
     onToggleSelect: () => void
     onToggleVisible: () => void
     onStartEditing: () => void
-    onDelete: () => void
+    onDelete?: () => void
 }
 
 export const ModuleActions = ({
@@ -45,10 +45,7 @@ export const ModuleActions = ({
 
                     {/* 可用模块的编辑按钮 */}
                     {!isFixed && !isEditing && (
-                        <ActionTooltip
-                            label="编辑模块名称"
-                            side="bottom"
-                        >
+                        <ActionTooltip label="编辑模块名称" side="bottom">
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -90,10 +87,7 @@ export const ModuleActions = ({
 
                     {/* 删除按钮 */}
                     {!isFixed && (
-                        <ActionTooltip
-                            label="从简历中移除"
-                            side="bottom"
-                        >
+                        <ActionTooltip label="从简历中移除" side="bottom">
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -108,4 +102,4 @@ export const ModuleActions = ({
             )}
         </div>
     )
-} 
+}

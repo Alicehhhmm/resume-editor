@@ -61,8 +61,8 @@ export const SortableModuleItem = ({
         setIsEditing(false)
     }
 
-    const isAvailable = module.group === 'available'
-    const isSelected = module.group === 'selected'
+    const isAvailable = ['available'].includes(module.group)
+    const isSelected = ['selected', 'custom'].includes(module.group)
 
     return (
         <div
