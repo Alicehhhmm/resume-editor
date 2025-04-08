@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import {
     Tooltip,
     TooltipContent,
@@ -22,9 +23,9 @@ export const ActionTooltip = ({
             <Tooltip>
                 <TooltipTrigger asChild>{children}</TooltipTrigger>
                 <TooltipContent side={side}>
-                    <p className="text-xs">{label}</p>
+                    <p className="text-xs text-white/60">{label}</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
     )
-} 
+}
