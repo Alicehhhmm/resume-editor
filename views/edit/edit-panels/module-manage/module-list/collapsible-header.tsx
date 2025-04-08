@@ -34,12 +34,12 @@ export const CollapsibleHeader = ({
                     {isOpen ? (
                         <ChevronDown
                             size={16}
-                            className="transition-transform duration-200"
+                            className="transition-transform duration-200 text-muted-foreground"
                         />
                     ) : (
                         <ChevronRight
                             size={16}
-                            className="transition-transform duration-200"
+                            className="transition-transform duration-200 text-muted-foreground"
                         />
                     )}
                 </Button>
