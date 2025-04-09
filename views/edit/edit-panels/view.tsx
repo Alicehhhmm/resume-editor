@@ -1,8 +1,8 @@
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
 import { ContentEditPanel } from '@/views/edit/edit-panels/content-edit'
 import { ModuleManagePanel } from '@/views/edit/edit-panels/module-manage'
+
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export const EditPanels = () => {
     return (

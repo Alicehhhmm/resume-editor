@@ -1,8 +1,21 @@
 import { MODULE_GROUPS } from '@/config/modules'
 
+// 简历模块类型
+export type ModuleID =
+    | 'personal-info'
+    | 'social'
+    | 'skills'
+    | 'work-experience'
+    | 'education'
+    | 'languages'
+    | 'projects'
+    | 'awards'
+    | 'certificates'
+    | 'portfolio';
+
 // 模块基础类型
 export type Module = {
-    id: string
+    id: ModuleID
     name: string
     isSelected: boolean
     isVisible: boolean
