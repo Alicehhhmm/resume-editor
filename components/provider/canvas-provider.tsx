@@ -2,10 +2,9 @@
 
 import { ReactNode, useEffect, useRef } from 'react'
 
-import { createCanvasStore, initCanvasState } from '@/store/canvas-store'
-
 import { CanvasStoreApi, CanvasStoreContext } from '@/contexts/canvas-context'
 import { getTemplateFromStorage } from '@/services/templateService'
+import { createCanvasStore, initCanvasState } from '@/stores/canvas-store'
 
 interface CanvasProviderProps {
     children: ReactNode
