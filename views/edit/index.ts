@@ -1,2 +1,2 @@
 export * from './view'
-export * from './template/view'
+export * from './select-template/view'

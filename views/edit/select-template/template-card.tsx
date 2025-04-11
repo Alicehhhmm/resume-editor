@@ -1,7 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { TemplateCardProps } from '@/types/resume-template';
+
+interface TemplateCardProps {
+  id: string
+  title: string
+  description: string
+  thumbnail: string
+  isActive:boolean
+  onClick: ()=> void
+}
 
 const TemplateCard = React.memo(({
   id,

@@ -1,30 +1,24 @@
-import React from 'react'
-
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Suspense, useCallback } from 'react'
+import type { FC } from 'react'
 
 import { useModuleTemplate } from '@/hooks'
+import { ErrorBoundary } from 'react-error-boundary'
 
-import { MODULE_COMPONENTS } from './Enums'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
-/**
- * 内容编辑面板组件
- * @description 根据选择的模块，渲染对应的编辑组件
- */
-export const ContentEditPanel: React.FC = () => {
-    const {
-        visibleModules,
-        templateTitle,
-        getModuleContent,
-        updateModule,
-        hasModuleContent,
-    } = useModuleTemplate()
+import { MODULE_COMPONENTS, ModuleEditorProps } from './Enums'
+
+export const ContentEditPanel: FC = () => (
+    <ErrorBoundary fallback={<ErrorFallback />}>
+        <Suspense fallback={<SkeletonLayout />}>
+            <EditPanelContent />
+        </Suspense>
+    </ErrorBoundary>
+)
+
+const EditPanelContent: FC = () => {
+    const { visibleModules, templateTitle, getModuleContent, updateModule, hasModuleContent } = useModuleTemplate()
 
     return (
         <Card className="w-full shadow-sm">
@@ -32,11 +26,7 @@ export const ContentEditPanel: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                     <div>
                         <CardTitle className="text-xl">内容编辑</CardTitle>
-                        {templateTitle && (
-                            <CardDescription className="text-sm">
-                                正在编辑: {templateTitle}
-                            </CardDescription>
-                        )}
+                        {templateTitle && <CardDescription className="text-sm">正在编辑: {templateTitle}</CardDescription>}
                     </div>
                 </div>
             </CardHeader>
@@ -44,23 +34,16 @@ export const ContentEditPanel: React.FC = () => {
                 {visibleModules.length > 0 ? (
                     <div className="space-y-8">
                         {visibleModules.map((module) => {
-                            // 获取对应的组件
                             const ModuleComponent = MODULE_COMPONENTS[module.id]
 
-                            if (!ModuleComponent) return null
+                            if (!ModuleComponent) return <EmptyPrompt />
 
-                            // 获取模块内容
                             const moduleContent = getModuleContent(module.id)
 
                             return (
                                 <Card key={module.id} className="shadow-sm">
                                     <CardContent className="p-4 pt-5">
-                                        <ModuleComponent
-                                            data={moduleContent}
-                                            onChange={(content) =>
-                                                updateModule(module.id, content)
-                                            }
-                                        />
+                                        <ModuleComponent data={moduleContent} onChange={(content) => updateModule(module.id, content)} />
                                     </CardContent>
                                 </Card>
                             )
@@ -69,9 +52,7 @@ export const ContentEditPanel: React.FC = () => {
                 ) : (
                     <div className="py-12 text-center space-y-6">
                         <div className="space-y-3 mx-auto max-w-md">
-                            <p className="text-muted-foreground">
-                                请在模块管理中选择要编辑的模块
-                            </p>
+                            <p className="text-muted-foreground">请在模块管理中选择要编辑的模块</p>
                             <div className="space-y-2">
                                 <Skeleton className="h-8 w-full" />
                                 <Skeleton className="h-20 w-full" />
@@ -84,3 +65,36 @@ export const ContentEditPanel: React.FC = () => {
         </Card>
     )
 }
+
+// 辅助组件
+const EmptyPrompt: FC = () => (
+    <div className="py-12 text-center text-muted-foreground">
+        <p>当前模块组件未开放</p>
+    </div>
+)
+
+const ErrorFallback: FC = () => (
+    <div className="p-4 bg-destructive/10 text-destructive rounded-lg">内容编辑面板加载失败，请尝试刷新页面</div>
+)
+
+const SkeletonLayout: FC = () => (
+    <Card className="w-full shadow-sm">
+        <CardHeader className="pb-3">
+            <div className="space-y-2">
+                <Skeleton className="h-6 w-32" />
+                <Skeleton className="h-4 w-48" />
+            </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+            {[1, 2, 3].map((i) => (
+                <Card key={i} className="shadow-sm">
+                    <CardContent className="p-4 pt-5 space-y-4">
+                        <Skeleton className="h-6 w-1/4" />
+                        <Skeleton className="h-20 w-full" />
+                        <Skeleton className="h-8 w-1/3" />
+                    </CardContent>
+                </Card>
+            ))}
+        </CardContent>
+    </Card>
+)

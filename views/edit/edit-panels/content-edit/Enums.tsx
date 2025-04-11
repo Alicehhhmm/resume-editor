@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import type { ResumeModule } from '@/types/resume-template'
 
 import { DEFAULT_MODULES } from '@/config/modules'
 
@@ -13,22 +14,17 @@ import { SkillsPanel } from './modules/skills'
 import { SocialPanel } from './modules/social'
 import { WorkExperiencePanel } from './modules/work-experience'
 
-/**
- * 模块编辑组件 Props 类型
- */
-export interface ModuleEditorProps {
-    data: any
-    onChange: (content: any) => void
-}
-
 /** 模块唯一标识类型 */
 export type ModuleKey = (typeof DEFAULT_MODULES)[number]['id']
 
-/**
- * 模块组件映射表
- * 将模块ID映射到对应的React组件
- */
-export const MODULE_COMPONENTS = {
+/** 模块编辑器属性 */
+export interface ModuleEditorProps {
+  data: ResumeModule | null
+  onChange: (content: ResumeModule) => void
+}
+
+/** 模块组件映射表 */
+export const MODULE_COMPONENTS: Record<ModuleKey, FC<ModuleEditorProps>> = {
     'personal-info': PersonalInfoPanel,
     social: SocialPanel,
     skills: SkillsPanel,
@@ -39,4 +35,4 @@ export const MODULE_COMPONENTS = {
     awards: AwardsPanel,
     certificates: CertificatesPanel,
     portfolio: PortfolioPanel,
-} satisfies Record<ModuleKey, FC<ModuleEditorProps>>
+} 
