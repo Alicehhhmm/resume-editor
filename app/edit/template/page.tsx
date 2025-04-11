@@ -1,6 +1,6 @@
-import { HydrateClient as TanstackHydrateClient } from '@/components/provider'
+import { TemplateView } from '@/views/edit/select-template/view'
 
-import { TemplateView } from '@/views/edit/template/view'
+import { HydrateClient as TanstackHydrateClient } from '@/components/provider'
 
 interface TemplatesPageProps {
     params: Promise<{ templateId: string }>

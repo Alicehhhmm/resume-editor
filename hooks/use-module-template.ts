@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { useModuleManager } from './use-module-manager'
 import { useResumeTemplate } from './use-resume-template'
-import type { Module } from '@/types/module'
+import type { Module, ModuleID } from '@/types/module'
+import type { ResumeModule, } from '@/types/resume-template'
 
 /**
  * 模块与模板关联 Hook
@@ -18,14 +19,17 @@ export const useModuleTemplate = () => {
 
   const {
     currentTemplate,
-    updateModuleContent
+    updateModuleContent,
+    updateStyle,
+    applyTheme,
+    applyLayout
   } = useResumeTemplate()
 
   /**
    * 获取模块在当前模板中的内容
    * @param moduleId 模块ID
    */
-  const getModuleContent = (moduleId: string) => {
+  const getModuleContent = (moduleId: ModuleID): ResumeModule | null => {
     if (!currentTemplate || !currentTemplate.modules) {
       return null
     }
@@ -37,7 +41,7 @@ export const useModuleTemplate = () => {
    * @param moduleId 模块ID
    * @param content 模块内容
    */
-  const updateModule = (moduleId: string, content: any) => {
+  const updateModule = (moduleId: ModuleID, content: any) => {
     updateModuleContent(moduleId, content)
   }
 
@@ -45,7 +49,7 @@ export const useModuleTemplate = () => {
    * 切换模块可见性
    * @param moduleId 模块ID
    */
-  const toggleModuleVisibility = (moduleId: string) => {
+  const toggleModuleVisibility = (moduleId: ModuleID) => {
     toggleVisible(moduleId)
   }
 
@@ -68,9 +72,45 @@ export const useModuleTemplate = () => {
    * 检查模块是否有内容
    * @param moduleId 模块ID
    */
-  const hasModuleContent = (moduleId: string) => {
+  const hasModuleContent = (moduleId: ModuleID) => {
     const content = getModuleContent(moduleId)
     return content !== null && Object.keys(content || {}).length > 0
+  }
+
+  /**
+   * 更新模块样式
+   * @param moduleId 模块ID
+   * @param style 样式配置
+   */
+  const updateModuleStyle = (moduleId: ModuleID, style: any) => {
+    const content = getModuleContent(moduleId)
+    if (!content) return
+
+    updateModule(moduleId, {
+      ...content,
+      style: {
+        ...content.style,
+        ...style
+      }
+    })
+  }
+
+  /**
+   * 更新模块配置
+   * @param moduleId 模块ID
+   * @param config 配置项
+   */
+  const updateModuleConfig = (moduleId: ModuleID, config: any) => {
+    const content = getModuleContent(moduleId)
+    if (!content) return
+
+    updateModule(moduleId, {
+      ...content,
+      config: {
+        ...content.config,
+        ...config
+      }
+    })
   }
 
   return {
@@ -87,9 +127,19 @@ export const useModuleTemplate = () => {
     toggleModuleVisibility,
     moveToAvailable,
     hasModuleContent,
+    updateModuleStyle,
+    updateModuleConfig,
+
+    // 模板操作
+    updateStyle,
+    applyTheme,
+    applyLayout,
 
     // 模板信息
     templateId: currentTemplate?.id,
     templateTitle: currentTemplate?.title,
+    templateStyle: currentTemplate?.style,
+    templateLayout: currentTemplate?.style?.layout,
+    templateTheme: currentTemplate?.style?.theme
   }
 } 

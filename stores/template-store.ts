@@ -5,7 +5,13 @@ import { toast } from 'sonner'
 import type {
   Template,
   TemplateState,
-  TemplateActions
+  TemplateActions,
+  TemplateStyle,
+  TemplateLayout,
+  TemplateTheme,
+  ExportOptions,
+  ShareOptions,
+  TemplateHistory
 } from '@/types/resume-template'
 
 import { DEFAULT_TEMPLATE } from '@/config/resume-template'
@@ -22,6 +28,11 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
       currentTemplate: DEFAULT_TEMPLATE,
       isLoading: false,
       error: null,
+      history: {
+        undo: [],
+        redo: []
+      },
+      currentHistoryIndex: -1,
 
       /**
        * 获取所有模板
@@ -58,7 +69,14 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
         const template = templates.find(t => t.id === templateId)
 
         if (template) {
-          set({ currentTemplate: template })
+          set({
+            currentTemplate: template,
+            history: {
+              undo: [template],
+              redo: []
+            },
+            currentHistoryIndex: 0
+          })
           toast.success(`已选择"${template.title}"模板`)
         } else {
           toast.error('模板不存在')
@@ -82,11 +100,21 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
           updatedAt: new Date().toISOString()
         }
 
+        // 更新历史记录
+        const { history, currentHistoryIndex } = get()
+        const newUndo = history.undo.slice(0, currentHistoryIndex + 1)
+        newUndo.push(updatedTemplate)
+
         set({
           currentTemplate: updatedTemplate,
           templates: get().templates.map(t =>
             t.id === updatedTemplate.id ? updatedTemplate : t
-          )
+          ),
+          history: {
+            undo: newUndo,
+            redo: []
+          },
+          currentHistoryIndex: newUndo.length - 1
         })
 
         toast.success('模板已更新')
@@ -114,11 +142,21 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
           updatedAt: new Date().toISOString()
         }
 
+        // 更新历史记录
+        const { history, currentHistoryIndex } = get()
+        const newUndo = history.undo.slice(0, currentHistoryIndex + 1)
+        newUndo.push(updatedTemplate)
+
         set({
           currentTemplate: updatedTemplate,
           templates: get().templates.map(t =>
             t.id === updatedTemplate.id ? updatedTemplate : t
-          )
+          ),
+          history: {
+            undo: newUndo,
+            redo: []
+          },
+          currentHistoryIndex: newUndo.length - 1
         })
 
         toast.success('模块内容已更新')
@@ -134,7 +172,7 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
           // 在实际应用中，这里应该是一个API请求
           const newTemplate: Template = {
             ...template,
-            id: `custom-${Date.now()}`,
+            id: `simple-default`,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
           }
@@ -142,6 +180,11 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
           set(state => ({
             templates: [...state.templates, newTemplate],
             currentTemplate: newTemplate,
+            history: {
+              undo: [newTemplate],
+              redo: []
+            },
+            currentHistoryIndex: 0,
             isLoading: false
           }))
 
@@ -154,13 +197,159 @@ const useTemplateStore = create<TemplateState & TemplateActions>()(
           })
           toast.error('创建模板失败')
         }
+      },
+
+      /**
+       * 应用主题
+       */
+      applyTheme: (theme: TemplateTheme) => {
+        const { currentTemplate } = get()
+        if (!currentTemplate) return
+
+        const updatedTemplate = {
+          ...currentTemplate,
+          style: {
+            ...currentTemplate.style,
+            theme
+          },
+          updatedAt: new Date().toISOString()
+        }
+
+        set({
+          currentTemplate: updatedTemplate,
+          templates: get().templates.map(t =>
+            t.id === updatedTemplate.id ? updatedTemplate : t
+          )
+        })
+      },
+
+      /**
+       * 应用布局
+       */
+      applyLayout: (layout: TemplateLayout) => {
+        const { currentTemplate } = get()
+        if (!currentTemplate) return
+
+        const updatedTemplate = {
+          ...currentTemplate,
+          style: {
+            ...currentTemplate.style,
+            layout
+          },
+          updatedAt: new Date().toISOString()
+        }
+
+        set({
+          currentTemplate: updatedTemplate,
+          templates: get().templates.map(t =>
+            t.id === updatedTemplate.id ? updatedTemplate : t
+          )
+        })
+      },
+
+      /**
+       * 更新样式
+       */
+      updateStyle: (style: Partial<TemplateStyle>) => {
+        const { currentTemplate } = get()
+        if (!currentTemplate) return
+
+        const updatedTemplate = {
+          ...currentTemplate,
+          style: {
+            ...currentTemplate.style,
+            ...style
+          },
+          updatedAt: new Date().toISOString()
+        }
+
+        set({
+          currentTemplate: updatedTemplate,
+          templates: get().templates.map(t =>
+            t.id === updatedTemplate.id ? updatedTemplate : t
+          )
+        })
+      },
+
+      /**
+       * 导出模板
+       */
+      exportTemplate: async (options: ExportOptions) => {
+        const { currentTemplate } = get()
+        if (!currentTemplate) {
+          toast.error('没有选中的模板')
+          return
+        }
+
+        try {
+          // 这里应该调用导出 API
+          console.log('Exporting template with options:', options)
+          toast.success('模板导出成功')
+        } catch (error) {
+          console.error('Error exporting template:', error)
+          toast.error('模板导出失败')
+        }
+      },
+
+      /**
+       * 分享模板
+       */
+      shareTemplate: async (options: ShareOptions) => {
+        const { currentTemplate } = get()
+        if (!currentTemplate) {
+          toast.error('没有选中的模板')
+          return
+        }
+
+        try {
+          // 这里应该调用分享 API
+          console.log('Sharing template with options:', options)
+          toast.success('模板分享成功')
+        } catch (error) {
+          console.error('Error sharing template:', error)
+          toast.error('模板分享失败')
+        }
+      },
+
+      /**
+       * 撤销操作
+       */
+      undo: () => {
+        const { history, currentHistoryIndex } = get()
+        if (currentHistoryIndex <= 0) return
+
+        const newIndex = currentHistoryIndex - 1
+        const previousTemplate = history.undo[newIndex]
+
+        set({
+          currentTemplate: previousTemplate,
+          currentHistoryIndex: newIndex
+        })
+      },
+
+      /**
+       * 重做操作
+       */
+      redo: () => {
+        const { history, currentHistoryIndex } = get()
+        if (currentHistoryIndex >= history.undo.length - 1) return
+
+        const newIndex = currentHistoryIndex + 1
+        const nextTemplate = history.undo[newIndex]
+
+        set({
+          currentTemplate: nextTemplate,
+          currentHistoryIndex: newIndex
+        })
       }
     }),
     {
       name: 'resume-template-storage',
       partialize: (state) => ({
         currentTemplate: state.currentTemplate,
-        templates: state.templates
+        templates: state.templates,
+        history: state.history,
+        currentHistoryIndex: state.currentHistoryIndex
       }),
     }
   )

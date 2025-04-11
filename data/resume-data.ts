@@ -5,27 +5,27 @@ import type { ResumeData } from "../types"
  * @description 用于填充简历模板的示例数据
  */
 export const resumeDataEn: ResumeData = {
-    personal: {
-        name: "JOHN DOE",
-        title: "SOFTWARE ENGINEER",
+  personal: {
+    name: "JOHN DOE",
+    title: "SOFTWARE ENGINEER",
         contact: {
-            phone: "+1 (555) 123-4567",
-            email: "john.doe@example.com",
-            location: "San Francisco, CA",
-            website: "johndoe.dev",
-            linkedin: "linkedin.com/in/johndoe",
+    phone: "+1 (555) 123-4567",
+    email: "john.doe@example.com",
+    location: "San Francisco, CA",
+    website: "johndoe.dev",
+    linkedin: "linkedin.com/in/johndoe",
             github: "github.com/johndoe"
         },
-        profile:
-            "Results-driven Software Engineer with 5+ years of experience developing robust applications and services. Specialized in full-stack development with expertise in React, Node.js, and cloud technologies. Passionate about creating efficient, scalable solutions that solve real-world problems. Strong collaborator who thrives in cross-functional teams and adapts quickly to new technologies.",
-    },
-    experience: [
-        {
-            title: "SENIOR SOFTWARE ENGINEER",
-            company: "Tech Innovations Inc.",
-            location: "San Francisco, CA",
-            period: "2021 - Present",
-            achievements: [
+    profile:
+      "Results-driven Software Engineer with 5+ years of experience developing robust applications and services. Specialized in full-stack development with expertise in React, Node.js, and cloud technologies. Passionate about creating efficient, scalable solutions that solve real-world problems. Strong collaborator who thrives in cross-functional teams and adapts quickly to new technologies.",
+  },
+  experience: [
+    {
+      title: "SENIOR SOFTWARE ENGINEER",
+      company: "Tech Innovations Inc.",
+      location: "San Francisco, CA",
+      period: "2021 - Present",
+      achievements: [
                 {
                     description: "Led development of a microservices architecture that improved system reliability by 35% and reduced deployment time by 50%",
                     metrics: "35% reliability improvement, 50% deployment time reduction",
@@ -45,14 +45,14 @@ export const resumeDataEn: ResumeData = {
                     metrics: "60% response time reduction",
                     technologies: ["PostgreSQL", "Redis", "GraphQL"]
                 },
-            ],
-        },
-        {
-            title: "SOFTWARE ENGINEER",
-            company: "Digital Solutions LLC",
-            location: "Seattle, WA",
-            period: "2018 - 2021",
-            achievements: [
+      ],
+    },
+    {
+      title: "SOFTWARE ENGINEER",
+      company: "Digital Solutions LLC",
+      location: "Seattle, WA",
+      period: "2018 - 2021",
+      achievements: [
                 {
                     description: "Developed and maintained RESTful APIs serving over 10,000 daily active users",
                     metrics: "10,000+ daily active users",
@@ -71,74 +71,74 @@ export const resumeDataEn: ResumeData = {
                     description: "Participated in agile development processes, consistently delivering features on schedule",
                     technologies: ["Scrum", "Jira", "Git"]
                 },
-            ],
-        },
-    ],
-    education: [
-        {
-            degree: "MASTER OF SCIENCE IN COMPUTER SCIENCE",
-            institution: "Stanford University",
-            period: "2016 - 2018",
-            description: "Specialized in Artificial Intelligence and Machine Learning. Graduated with honors. GPA: 3.9/4.0",
+      ],
+    },
+  ],
+  education: [
+    {
+      degree: "MASTER OF SCIENCE IN COMPUTER SCIENCE",
+      institution: "Stanford University",
+      period: "2016 - 2018",
+      description: "Specialized in Artificial Intelligence and Machine Learning. Graduated with honors. GPA: 3.9/4.0",
             major: "Computer Science",
             gpa: 3.9,
             courses: ["Advanced Machine Learning", "Computer Vision", "Natural Language Processing", "Distributed Systems"]
-        },
-        {
-            degree: "BACHELOR OF SCIENCE IN SOFTWARE ENGINEERING",
-            institution: "University of California, Berkeley",
-            period: "2012 - 2016",
-            description: "Dean's List for all semesters. Participated in ACM programming competitions. GPA: 3.8/4.0",
+    },
+    {
+      degree: "BACHELOR OF SCIENCE IN SOFTWARE ENGINEERING",
+      institution: "University of California, Berkeley",
+      period: "2012 - 2016",
+      description: "Dean's List for all semesters. Participated in ACM programming competitions. GPA: 3.8/4.0",
             major: "Software Engineering",
             gpa: 3.8,
             courses: ["Data Structures", "Algorithms", "Database Systems", "Web Development"]
-        },
-    ],
-    skills: [
-        { name: "JavaScript/TypeScript", level: 95 },
-        { name: "React/Next.js", level: 90 },
-        { name: "Node.js", level: 85 },
-        { name: "Python", level: 80 },
-        { name: "AWS/Cloud Services", level: 75 },
-        { name: "Docker/Kubernetes", level: 70 },
-        { name: "SQL/NoSQL Databases", level: 85 },
-        { name: "CI/CD", level: 80 },
-    ],
-    languages: [
-        { name: "English", proficiency: "Native" },
-        { name: "Spanish", proficiency: "Professional" },
-        { name: "Mandarin", proficiency: "Elementary" },
-    ],
-    certificates: [
-        {
-            name: "AWS Certified Solutions Architect",
-            issuer: "Amazon Web Services",
-            date: "2022",
-            url: "https://aws.amazon.com/certification/",
-        },
-        {
-            name: "Google Professional Cloud Developer",
-            issuer: "Google Cloud",
-            date: "2021",
-            url: "https://cloud.google.com/certification/cloud-developer",
-        },
-    ],
-    projects: [
-        {
-            name: "E-commerce Platform",
-            description: "Scalable e-commerce platform with real-time inventory and payment processing",
-            technologies: ["React", "Node.js", "MongoDB", "Stripe API"],
-            url: "https://example-store.com",
-            github: "github.com/johndoe/ecommerce",
+    },
+  ],
+  skills: [
+    { name: "JavaScript/TypeScript", level: 95 },
+    { name: "React/Next.js", level: 90 },
+    { name: "Node.js", level: 85 },
+    { name: "Python", level: 80 },
+    { name: "AWS/Cloud Services", level: 75 },
+    { name: "Docker/Kubernetes", level: 70 },
+    { name: "SQL/NoSQL Databases", level: 85 },
+    { name: "CI/CD", level: 80 },
+  ],
+  languages: [
+    { name: "English", proficiency: "Native" },
+    { name: "Spanish", proficiency: "Professional" },
+    { name: "Mandarin", proficiency: "Elementary" },
+  ],
+  certificates: [
+    {
+      name: "AWS Certified Solutions Architect",
+      issuer: "Amazon Web Services",
+      date: "2022",
+      url: "https://aws.amazon.com/certification/",
+    },
+    {
+      name: "Google Professional Cloud Developer",
+      issuer: "Google Cloud",
+      date: "2021",
+      url: "https://cloud.google.com/certification/cloud-developer",
+    },
+  ],
+  projects: [
+    {
+      name: "E-commerce Platform",
+      description: "Scalable e-commerce platform with real-time inventory and payment processing",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe API"],
+      url: "https://example-store.com",
+      github: "github.com/johndoe/ecommerce",
             period: "2020 - 2021",
             role: "Lead Developer"
-        },
-        {
-            name: "Task Management System",
-            description: "Team collaboration tool with task assignments, progress tracking, and notifications",
-            technologies: ["Vue.js", "Express", "PostgreSQL", "Socket.IO"],
-            url: "https://taskmaster.io",
-            github: "github.com/johndoe/taskmaster",
+    },
+    {
+      name: "Task Management System",
+      description: "Team collaboration tool with task assignments, progress tracking, and notifications",
+      technologies: ["Vue.js", "Express", "PostgreSQL", "Socket.IO"],
+      url: "https://taskmaster.io",
+      github: "github.com/johndoe/taskmaster",
             period: "2019 - 2020",
             role: "Full Stack Developer"
         },
