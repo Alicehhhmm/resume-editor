@@ -4,4 +4,9 @@
  */
 
 export { default as useModuleStore } from './module-store'
-export * from './canvas-store'
+
+// 画布状态
+export { createCanvasStore, initCanvasState } from './canvas-store'
+
+// 模板状态
+export { default as useResumeTemplateStore } from './template-store'

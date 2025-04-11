@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { DEFAULT_MODULES } from '@/config/modules'
 
 import { AwardsPanel } from './modules/awards'
@@ -11,11 +13,22 @@ import { SkillsPanel } from './modules/skills'
 import { SocialPanel } from './modules/social'
 import { WorkExperiencePanel } from './modules/work-experience'
 
-/** Map unique key */
-export type Modulekey = (typeof DEFAULT_MODULES)[number]['id']
+/**
+ * 模块编辑组件 Props 类型
+ */
+export interface ModuleEditorProps {
+    data: any
+    onChange: (content: any) => void
+}
 
-/** module key enum */
-export const MODULE_COMPONENTS: Record<Modulekey, React.ComponentType> = {
+/** 模块唯一标识类型 */
+export type ModuleKey = (typeof DEFAULT_MODULES)[number]['id']
+
+/**
+ * 模块组件映射表
+ * 将模块ID映射到对应的React组件
+ */
+export const MODULE_COMPONENTS = {
     'personal-info': PersonalInfoPanel,
     social: SocialPanel,
     skills: SkillsPanel,
@@ -26,4 +39,4 @@ export const MODULE_COMPONENTS: Record<Modulekey, React.ComponentType> = {
     awards: AwardsPanel,
     certificates: CertificatesPanel,
     portfolio: PortfolioPanel,
-}
+} satisfies Record<ModuleKey, FC<ModuleEditorProps>>

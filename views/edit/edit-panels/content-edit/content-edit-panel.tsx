@@ -1,51 +1,86 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
 
-import { useModuleManager } from '@/hooks'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
-import type { ModuleID } from '@/types/module'
+import { useModuleTemplate } from '@/hooks'
 
 import { MODULE_COMPONENTS } from './Enums'
 
-interface SequenceType {
-    moduleId: ModuleID
-    show: boolean
-}
-
-export const ContentEditPanel = () => {
-    const { selectedModules } = useModuleManager()
-    const [sequence, setSequence] = useState<SequenceType[]>([])
-
-    useEffect(() => {
-        // 根据 selectedModules 的顺序渲染模块
-        if (selectedModules && selectedModules.length > 0) {
-            setSequence(
-                selectedModules.map((module) => ({
-                    moduleId: module.id,
-                    show: module.isVisible,
-                }))
-            )
-        }
-    }, [selectedModules])
+/**
+ * 内容编辑面板组件
+ * @description 根据选择的模块，渲染对应的编辑组件
+ */
+export const ContentEditPanel: React.FC = () => {
+    const {
+        visibleModules,
+        templateTitle,
+        getModuleContent,
+        updateModule,
+        hasModuleContent,
+    } = useModuleTemplate()
 
     return (
-        <div className="border p-4 rounded-md">
-            <h2 className="text-xl font-semibold mb-4">内容编辑</h2>
-
-            {sequence.length > 0 ? (
-                sequence.map(({ moduleId, show }) => {
-                    const ModuleComponent = MODULE_COMPONENTS[moduleId]
-
-                    return ModuleComponent && show ? (
-                        <div key={moduleId} className="mb-4">
-                            <ModuleComponent />
-                        </div>
-                    ) : null
-                })
-            ) : (
-                <div className="text-center py-8 text-gray-500">
-                    请在模块管理中选择要编辑的模块
+        <Card className="w-full shadow-sm">
+            <CardHeader className="pb-3">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <div>
+                        <CardTitle className="text-xl">内容编辑</CardTitle>
+                        {templateTitle && (
+                            <CardDescription className="text-sm">
+                                正在编辑: {templateTitle}
+                            </CardDescription>
+                        )}
+                    </div>
                 </div>
-            )}
-        </div>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                {visibleModules.length > 0 ? (
+                    <div className="space-y-8">
+                        {visibleModules.map((module) => {
+                            // 获取对应的组件
+                            const ModuleComponent = MODULE_COMPONENTS[module.id]
+
+                            if (!ModuleComponent) return null
+
+                            // 获取模块内容
+                            const moduleContent = getModuleContent(module.id)
+
+                            return (
+                                <Card key={module.id} className="shadow-sm">
+                                    <CardContent className="p-4 pt-5">
+                                        <ModuleComponent
+                                            data={moduleContent}
+                                            onChange={(content) =>
+                                                updateModule(module.id, content)
+                                            }
+                                        />
+                                    </CardContent>
+                                </Card>
+                            )
+                        })}
+                    </div>
+                ) : (
+                    <div className="py-12 text-center space-y-6">
+                        <div className="space-y-3 mx-auto max-w-md">
+                            <p className="text-muted-foreground">
+                                请在模块管理中选择要编辑的模块
+                            </p>
+                            <div className="space-y-2">
+                                <Skeleton className="h-8 w-full" />
+                                <Skeleton className="h-20 w-full" />
+                                <Skeleton className="h-8 w-3/4 mx-auto" />
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </CardContent>
+        </Card>
     )
 }
