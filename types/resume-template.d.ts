@@ -1,4 +1,20 @@
-import type { Module } from '@/types/module'
+import type { Module, ModuleID } from '@/types/module'
+import type {
+    PersonalInfo,
+    Education,
+    WorkExperience,
+    Skill,
+    Language,
+    Certificate,
+    Project,
+    Award,
+    Publication,
+    VolunteerExperience,
+    ResumeData
+} from '@/types/resume'
+import type { CanvasElement, TemplateElementProperties } from '@/types/canvas'
+
+
 
 /**
  * 模板分类类型
@@ -12,6 +28,73 @@ export type TemplateIdType =
     | 'simple-default'
     | 'simple-modern'
 
+// TODO: 后续添加的模板
+// | 'canon-classic'
+// | 'canon-professional'
+// | 'creativity-modern'
+// | 'creativity-minimal'
+// | 'specialty-academic'
+// | 'specialty-technical'
+
+/**
+ * 模板主题类型
+ */
+export type TemplateTheme = 'light' | 'dark' | 'custom'
+
+/**
+ * 模板布局类型
+ */
+export type TemplateLayout = 'single-column' | 'two-column' | 'custom'
+
+/**
+ * 模板样式配置
+ */
+export interface TemplateStyle {
+    theme: TemplateTheme
+    layout: TemplateLayout
+    colors: {
+        primary: string
+        secondary: string
+        background: string
+        text: string
+        accent: string
+    }
+    typography: {
+        fontFamily: string
+        fontSize: {
+            base: string
+            heading: string
+            subheading: string
+        }
+        lineHeight: {
+            base: string
+            heading: string
+        }
+    }
+}
+
+/**
+ * 模板导出选项
+ */
+export interface ExportOptions {
+    format: 'pdf' | 'docx' | 'html'
+    quality: 'low' | 'medium' | 'high'
+    includeMetadata?: boolean
+    watermark?: boolean
+    pageSize?: 'A4' | 'Letter' | 'Custom'
+    orientation?: 'portrait' | 'landscape'
+}
+
+/**
+ * 模板分享选项
+ */
+export interface ShareOptions {
+    platform: 'email' | 'link' | 'social'
+    permissions: 'view' | 'edit' | 'comment'
+    expiration?: string
+    password?: string
+}
+
 /**
  * 简历模板数据结构
  * @description 定义简历模板的基本信息
@@ -23,9 +106,26 @@ export interface Template {
     category: Category
     templateId: TemplateIdType
     thumbnail: string
-    modules?: Record<string, any> // 模板中各模块的具体内容
+    modules?: Record<ModuleID, ResumeModule>
     createdAt?: string
     updatedAt?: string
+    layout?: {
+        sections: string[]
+        styles: TemplateStyle
+    }
+    metadata?: {
+        version: string
+        author: string
+        tags: string[]
+        rating: number
+        downloads: number
+        lastModified: string
+    }
+    preview?: {
+        images: string[]
+        description: string
+        features: string[]
+    }
 }
 
 /**
@@ -33,10 +133,18 @@ export interface Template {
  * @description 定义模板状态管理所需的数据结构
  */
 export interface TemplateState {
-    templates: Template[] // 所有可用模板
-    currentTemplate: Template | null // 当前选中的模板
-    isLoading: boolean // 加载状态
-    error: string | null // 错误信息
+    templates: Template[]
+    currentTemplate: Template | null
+    isLoading: boolean
+    error: string | null
+    previewMode?: boolean
+    editMode?: boolean
+    exportOptions?: ExportOptions
+    shareOptions?: ShareOptions
+    history?: {
+        undo: Template[]
+        redo: Template[]
+    }
 }
 
 /**
@@ -44,11 +152,23 @@ export interface TemplateState {
  * @description 定义模板操作方法
  */
 export interface TemplateActions {
-    fetchTemplates: () => Promise<void> // 获取所有模板
-    selectTemplate: (templateId: string) => void // 选择模板
-    updateTemplate: (template: Partial<Template>) => void // 更新模板
-    updateModuleContent: (moduleId: string, content: any) => void // 更新模块内容
-    createTemplate: (template: Omit<Template, 'id'>) => Promise<void> // 创建自定义模板
+    fetchTemplates: () => Promise<void>
+    selectTemplate: (templateId: string) => void
+    updateTemplate: (template: Partial<Template>) => void
+    updateModuleContent: (moduleId: string, content: any) => void
+    createTemplate: (template: Omit<Template, 'id'>) => Promise<void>
+    togglePreviewMode: () => void
+    toggleEditMode: () => void
+    resetTemplate: () => void
+    exportTemplate: (options: ExportOptions) => Promise<void>
+    shareTemplate: (options: ShareOptions) => Promise<void>
+    undo: () => void
+    redo: () => void
+    saveTemplate: () => Promise<void>
+    deleteTemplate: (templateId: string) => Promise<void>
+    duplicateTemplate: (templateId: string) => Promise<void>
+    applyTheme: (theme: TemplateTheme) => void
+    updateStyle: (style: Partial<TemplateStyle>) => void
 }
 
 /**
@@ -80,50 +200,105 @@ export interface TemplateGridProps {
 export interface TemplateModuleMap {
     templateId: string
     moduleId: string
-    content: any // 具体内容
-    position?: { x: number, y: number } // 在画布中的位置
-    style?: Record<string, any> // 样式配置
+    content: any
+    order?: number
+    isVisible?: boolean
+    isRequired?: boolean
+    validation?: {
+        required?: boolean
+        minLength?: number
+        maxLength?: number
+        pattern?: string
+        custom?: (value: any) => boolean
+    }
+    permissions?: {
+        canEdit?: boolean
+        canDelete?: boolean
+        canMove?: boolean
+        canResize?: boolean
+    }
 }
 
-// 个人信息-模块内容类型
-type PersonalInfo = {
-    name: string;
-    contact: {
-        phone: string;
-        email: string;
-        location?: string;
-    };
-    socialProfiles?: {
-        linkedin?: string;
-        github?: string;
-    };
-};
+/**
+ * 模板编辑器Props类型
+ */
+export interface TemplateEditorProps {
+    template: Template
+    onUpdate: (template: Partial<Template>) => void
+    onSave: () => Promise<void>
+    onExport: (options: ExportOptions) => Promise<void>
+    onShare: (options: ShareOptions) => Promise<void>
+    onUndo: () => void
+    onRedo: () => void
+    onReset: () => void
+    isDirty?: boolean
+    isSaving?: boolean
+    isExporting?: boolean
+    isSharing?: boolean
+    error?: string
+}
 
-// 教育-模块内容类型
-type Education = {
-    institution: string;
-    degree: string;
-    major: string;
-    duration: [Date, Date?];
-    gpa?: number;
-    courses?: string[];
-};
+/**
+ * 模板预览Props类型
+ */
+export interface TemplatePreviewProps {
+    template: Template
+    data: ResumeData
+    onClose: () => void
+    onEdit: () => void
+    onExport: (options: ExportOptions) => Promise<void>
+    onShare: (options: ShareOptions) => Promise<void>
+    isExporting?: boolean
+    isSharing?: boolean
+    error?: string
+}
 
-// 工作经历-模块内容类型
-type WorkExperience = {
-    company: string;
-    position: string;
-    duration: [Date, Date?];
-    achievements: {
-        description: string;
-        metrics?: string;
-        technologies?: string[];
-    }[];
-};
+/**
+ * 简历模板元素类型
+ * @description 扩展CanvasElement，添加模板特有的属性
+ */
+export interface ResumeTemplateElement extends CanvasElement {
+    type: 'template'
+    properties: TemplateElementProperties & {
+        template: Template
+        modules: Record<string, ResumeModule>
+    }
+}
+
+type ModuleMerge =
+    | PersonalInfo
+    | Education
+    | WorkExperience
+    | Skill[]
+    | Language[]
+    | Certificate[]
+    | Project[]
+    | Award[]
+    | Publication[]
+    | VolunteerExperience[]
 
 // 模板显示的模块内容-类型合并
-interface ResumeModule extends Module {
-    data?: PersonalInfo | Education | WorkExperience
+export interface ResumeModule extends Module {
+    data?: ModuleMerge
+    style?: Record<string, any>
+    config?: {
+        isCollapsible?: boolean
+        isDraggable?: boolean
+        isEditable?: boolean
+        validation?: {
+            required?: boolean
+            minLength?: number
+            maxLength?: number
+            pattern?: string
+            custom?: (value: any) => boolean
+        }
+        permissions?: {
+            canEdit?: boolean
+            canDelete?: boolean
+            canMove?: boolean
+            canResize?: boolean
+        }
+    }
 }
 
 export type { ResumeModule }
