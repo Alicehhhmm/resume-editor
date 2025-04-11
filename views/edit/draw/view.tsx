@@ -1,13 +1,15 @@
 'use client'
 
-import { DrawViewError } from './draw-error'
 import { Suspense } from 'react'
+
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { Draw as CanvasEditor } from '@/components/canvas/draw'
 import { CanvasToolbar } from '@/components/canvas/tools'
 import { Loading } from '@/components/common'
-import { TemplateRenderer } from '@/components/template/template-renderer'
+
+import { DrawViewError } from './draw-error'
+import { TemplateRenderer } from './template-renderer'
 
 export const DrawView = () => {
     return (
