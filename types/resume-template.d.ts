@@ -10,7 +10,8 @@ import type {
     Award,
     Publication,
     VolunteerExperience,
-    ResumeData
+    ResumeData,
+    ModuleKey
 } from '@/types/resume'
 import type { CanvasElement, TemplateElementProperties } from '@/types/canvas'
 
@@ -151,7 +152,7 @@ export interface TemplateActions {
     fetchTemplates: () => Promise<void>
     selectTemplate: (templateId: string) => void
     updateTemplate: (template: Partial<Template>) => void
-    updateModuleContent: (moduleId: string, content: any) => void
+    updateModuleContent: (moduleId: ModuleKey, content: any) => void
     createTemplate: (template: Omit<Template, 'id'>) => Promise<void>
     applyTheme: (theme: TemplateTheme) => void
     applyLayout: (layout: TemplateLayout) => void

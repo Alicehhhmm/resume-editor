@@ -51,10 +51,11 @@ export const TemplateView = ({ templateId }: TemplateViewProps) => {
  */
 const TemplateViewSuspense = () => {
     const router = useRouter()
-    const [categoryId, setCategoryId] = useState<Category>('all')
-    const [selectedId, setSelectedId] = useState<string>()
     const canvas = useCanvas()
     const { selectTemplate } = useResumeTemplate()
+
+    const [categoryId, setCategoryId] = useState<Category>('all')
+    const [selectedId, setSelectedId] = useState<string>()
 
     // 获取模板数据
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useSuspenseInfiniteQuery({
@@ -81,12 +82,6 @@ const TemplateViewSuspense = () => {
         const params = new URLSearchParams(window.location.search)
         params.set('templateId', template.id)
         router.push(`?${params.toString()}`, { scroll: false })
-
-        // 更新Canvas状态
-        canvas.updateTemplate(template)
-
-        // 将模板保存到本地
-        saveTemplateToStorage(template)
 
         // 更新到模板整体管理
         selectTemplate(template.id)
