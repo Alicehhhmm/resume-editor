@@ -1,13 +1,13 @@
 import { Suspense, useCallback } from 'react'
 import type { FC } from 'react'
 
-import { useModuleTemplate } from '@/hooks'
+import { useModuleTemplate, useResumeTemplate } from '@/hooks'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { MODULE_COMPONENTS, ModuleEditorProps } from './Enums'
+import { MODULE_COMPONENTS } from './Enums'
 
 export const ContentEditPanel: FC = () => (
     <ErrorBoundary fallback={<ErrorFallback />}>
@@ -18,19 +18,17 @@ export const ContentEditPanel: FC = () => (
 )
 
 const EditPanelContent: FC = () => {
-    const { visibleModules, templateTitle, getModuleContent, updateModule, hasModuleContent } = useModuleTemplate()
+    const { visibleModules, templateTitle } = useModuleTemplate()
+
 
     return (
-        <Card className="w-full shadow-sm">
+        <Card className="w-full rounded-none border-0">
             <CardHeader className="pb-3">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <div>
-                        <CardTitle className="text-xl">内容编辑</CardTitle>
-                        {templateTitle && <CardDescription className="text-sm">正在编辑: {templateTitle}</CardDescription>}
-                    </div>
+                    <div>{templateTitle && <CardDescription className="text-sm">正在编辑: {templateTitle}</CardDescription>}</div>
                 </div>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4">
                 {visibleModules.length > 0 ? (
                     <div className="space-y-8">
                         {visibleModules.map((module) => {
@@ -38,12 +36,10 @@ const EditPanelContent: FC = () => {
 
                             if (!ModuleComponent) return <EmptyPrompt />
 
-                            const moduleContent = getModuleContent(module.id)
-
                             return (
-                                <Card key={module.id} className="shadow-sm">
-                                    <CardContent className="p-4 pt-5">
-                                        <ModuleComponent data={moduleContent} onChange={(content) => updateModule(module.id, content)} />
+                                <Card key={module.id} className="rounded-none border-0">
+                                    <CardContent className="">
+                                        <ModuleComponent />
                                     </CardContent>
                                 </Card>
                             )
