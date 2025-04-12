@@ -17,15 +17,15 @@
  * @property {string} [blog] - 博客链接
  */
 export interface ContactInfo {
-  phone: string
-  email: string
-  location: string
-  website?: string
-  linkedin?: string
-  github?: string
-  twitter?: string
-  wechat?: string
-  blog?: string
+    phone: string
+    email: string
+    location: string
+    website?: string
+    linkedin?: string
+    github?: string
+    twitter?: string
+    wechat?: string
+    blog?: string
 }
 
 /**
@@ -43,16 +43,16 @@ export interface ContactInfo {
  * @property {string[]} [interests] - 兴趣爱好
  */
 export interface PersonalInfo {
-  name: string
-  title: string
-  avatar?: string
-  contact: ContactInfo
-  profile: string
-  birthDate?: string
-  nationality?: string
-  maritalStatus?: 'Single' | 'Married' | 'Divorced'
-  languages?: string[]
-  interests?: string[]
+    name: string
+    title: string
+    avatar?: string
+    contact: ContactInfo
+    profile: string
+    birthDate?: string
+    nationality?: string
+    maritalStatus?: 'Single' | 'Married' | 'Divorced'
+    languages?: Language[]
+    interests?: string[]
 }
 
 /**
@@ -66,12 +66,12 @@ export interface PersonalInfo {
  * @property {string} [duration] - 项目持续时间
  */
 export interface Achievement {
-  description: string
-  metrics?: string
-  technologies?: string[]
-  impact?: string
-  role?: string
-  duration?: string
+    description: string
+    metrics?: string
+    technologies?: string[]
+    impact?: string
+    role?: string
+    duration?: string
 }
 
 /**
@@ -90,17 +90,17 @@ export interface Achievement {
  * @property {string} [reasonForLeaving] - 离职原因
  */
 export interface WorkExperience {
-  title: string
-  company: string
-  location: string
-  period: string
-  department?: string
-  employmentType?: 'Full-time' | 'Part-time' | 'Contract' | 'Internship'
-  achievements: Achievement[]
-  technologies?: string[]
-  responsibilities?: string[]
-  supervisor?: string
-  reasonForLeaving?: string
+    title: string
+    company: string
+    location: string
+    period: string
+    department?: string
+    employmentType?: 'Full-time' | 'Part-time' | 'Contract' | 'Internship'
+    achievements: Achievement[]
+    technologies?: string[]
+    responsibilities?: string[]
+    supervisor?: string
+    reasonForLeaving?: string
 }
 
 /**
@@ -120,18 +120,18 @@ export interface WorkExperience {
  * @property {string[]} [activities] - 校园活动
  */
 export interface Education {
-  degree: string
-  institution: string
-  period: string
-  description: string
-  major?: string
-  minor?: string
-  gpa?: number
-  courses?: string[]
-  honors?: string[]
-  thesis?: string
-  advisor?: string
-  activities?: string[]
+    degree: string
+    institution: string
+    period: string
+    description: string
+    major?: string
+    minor?: string
+    gpa?: number
+    courses?: string[]
+    honors?: string[]
+    thesis?: string
+    advisor?: string
+    activities?: string[]
 }
 
 /**
@@ -145,12 +145,12 @@ export interface Education {
  * @property {string} [description] - 技能描述
  */
 export interface Skill {
-  name: string
-  level: number
-  category?: 'Technical' | 'Soft' | 'Language' | 'Other'
-  yearsOfExperience?: number
-  lastUsed?: string
-  description?: string
+    name: string
+    level: number
+    category?: 'Technical' | 'Soft' | 'Language' | 'Other'
+    yearsOfExperience?: number
+    lastUsed?: string
+    description?: string
 }
 
 /**
@@ -165,13 +165,13 @@ export interface Skill {
  * @property {string} [certification] - 语言证书
  */
 export interface Language {
-  name: string
-  proficiency: 'Elementary' | 'Limited Working' | 'Professional' | 'Full Professional' | 'Native' | 'Bilingual'
-  reading?: number
-  writing?: number
-  speaking?: number
-  listening?: number
-  certification?: string
+    name: string
+    proficiency: 'Elementary' | 'Limited Working' | 'Professional' | 'Full Professional' | 'Native' | 'Bilingual'
+    reading?: number
+    writing?: number
+    speaking?: number
+    listening?: number
+    certification?: string
 }
 
 /**
@@ -187,14 +187,14 @@ export interface Language {
  * @property {string[]} [skills] - 相关技能
  */
 export interface Certificate {
-  name: string
-  issuer: string
-  date: string
-  url?: string
-  credentialId?: string
-  expirationDate?: string
-  description?: string
-  skills?: string[]
+    name: string
+    issuer: string
+    date: string
+    url?: string
+    credentialId?: string
+    expirationDate?: string
+    description?: string
+    skills?: string[]
 }
 
 /**
@@ -215,19 +215,19 @@ export interface Certificate {
  * @property {'Completed' | 'In Progress' | 'On Hold'} [status] - 项目状态
  */
 export interface Project {
-  name: string
-  description: string
-  technologies: string[]
-  url?: string
-  github?: string
-  period?: string
-  role?: string
-  teamSize?: number
-  responsibilities?: string[]
-  achievements?: string[]
-  challenges?: string[]
-  client?: string
-  status?: 'Completed' | 'In Progress' | 'On Hold'
+    name: string
+    description: string
+    technologies: string[]
+    url?: string
+    github?: string
+    period?: string
+    role?: string
+    teamSize?: number
+    responsibilities?: string[]
+    achievements?: string[]
+    challenges?: string[]
+    client?: string
+    status?: 'Completed' | 'In Progress' | 'On Hold'
 }
 
 /**
@@ -242,13 +242,13 @@ export interface Project {
  * @property {string} [prize] - 奖项等级
  */
 export interface Award {
-  name: string
-  issuer: string
-  date: string
-  description?: string
-  category?: string
-  level?: 'International' | 'National' | 'Regional' | 'Company'
-  prize?: string
+    name: string
+    issuer: string
+    date: string
+    description?: string
+    category?: string
+    level?: 'International' | 'National' | 'Regional' | 'Company'
+    prize?: string
 }
 
 /**
@@ -264,14 +264,14 @@ export interface Award {
  * @property {string} [impact] - 影响力描述
  */
 export interface Publication {
-  title: string
-  type: 'Article' | 'Book' | 'Conference Paper' | 'Patent'
-  publisher: string
-  date: string
-  url?: string
-  authors?: string[]
-  description?: string
-  impact?: string
+    title: string
+    type: 'Article' | 'Book' | 'Conference Paper' | 'Patent'
+    publisher: string
+    date: string
+    url?: string
+    authors?: string[]
+    description?: string
+    impact?: string
 }
 
 /**
@@ -287,14 +287,63 @@ export interface Publication {
  * @property {string[]} [skills] - 相关技能
  */
 export interface VolunteerExperience {
-  organization: string
-  role: string
-  period: string
-  location?: string
-  description: string
-  achievements?: string[]
-  hours?: number
-  skills?: string[]
+    organization: string
+    role: string
+    period: string
+    location?: string
+    description: string
+    achievements?: string[]
+    hours?: number
+    skills?: string[]
+}
+
+/**
+ * 作品集项目类型
+ * @interface PortfolioItem
+ * @property {string} title - 项目名称
+ * @property {string} description - 项目描述
+ * @property {string} url - 项目链接
+ * @property {string[]} technologies - 使用的技术栈
+ * @property {string} [date] - 项目完成日期
+ */
+export interface PortfolioItem {
+    title: string;
+    description: string;
+    url: string;
+    technologies: string[];
+    date?: string; // 可选属性
+}
+
+/**
+ * 推荐人类型
+ * @interface ReferencesItem
+ * @property {string} name - 推荐人姓名
+ * @property {string} title - 推荐人职位
+ * @property {string} company - 推荐人公司
+ * @property {string} contact - 推荐人联系方式
+ * @property {string} relationship - 与推荐人的关系
+ */
+export interface ReferencesItem {
+    name: string;
+    title: string;
+    company: string;
+    contact: string;
+    relationship: string;
+}
+
+/**
+ * 自定义部分类型
+ * @interface CustomSection
+ * @property {string} title - 自定义部分标题
+ * @property {Array<{title: string, description: string, period?: string}>} items - 项目列表
+ */
+export interface CustomSection {
+    title: string;
+    items: Array<{
+        title: string;
+        description: string;
+        period?: string; // 可选属性
+    }>;
 }
 
 /**
@@ -310,34 +359,39 @@ export interface VolunteerExperience {
  * @property {Award[]} [awards] - 获奖情况
  * @property {Publication[]} [publications] - 出版物
  * @property {VolunteerExperience[]} [volunteer] - 志愿者经历
- * @property {Array<{name: string, title: string, company: string, contact: string, relationship: string}>} [references] - 推荐人
- * @property {Array<{title: string, items: Array<{title: string, description: string, period?: string, [key: string]: any}>}>} [customSections] - 自定义部分
+ * @property {ReferencesItem[]} [references] - 推荐人
+ * @property {PortfolioItem[]} [portfolio] - 作品集
+ * @property {CustomSection[]} [customSections] - 自定义部分
  */
-export interface ResumeData {
-  personal: PersonalInfo
-  experience: WorkExperience[]
-  education: Education[]
-  skills: Skill[]
-  languages: Language[]
-  certificates: Certificate[]
-  projects: Project[]
-  awards?: Award[]
-  publications?: Publication[]
-  volunteer?: VolunteerExperience[]
-  references?: {
-    name: string
-    title: string
-    company: string
-    contact: string
-    relationship: string
-  }[]
-  customSections?: {
-    title: string
-    items: {
-      title: string
-      description: string
-      period?: string
-      [key: string]: any
-    }[]
-  }[]
-}
+
+type ModuleToDataType = {
+    personal: PersonalInfo;
+    social?: ContactInfo;
+    skills?: Skill[];
+    experience?: WorkExperience[];
+    education?: Education[];
+    languages?: Language[];
+    projects?: Project[];
+    awards?: Award[];
+    certificates?: Certificate[];
+    portfolio?: PortfolioItem[];
+    publications?: Publication[]
+    volunteer?: VolunteerExperience[]
+    references?: ReferencesItem[]
+    custom?: CustomSection[]
+};
+
+/**
+ * ModuleKey
+ * @description 模块唯一标识 ModuleToDataType 的键
+ */
+export type ModuleKey = keyof ModuleToDataType;
+
+/**
+ * 可选模块
+ * @description 定义简历数据的可选部分，允许部分字段缺失。
+ */
+export type ResumeData = Partial<Record<ModuleKey, ModuleToDataType[ModuleKey]>>;
+
+
+

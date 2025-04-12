@@ -25,7 +25,7 @@ export const MODULE_ACTIONS = {
 // 默认模块配置
 export const DEFAULT_MODULES: ModuleItem[] = [
     {
-        id: 'personal-info',
+        id: 'personal',
         name: '个人简介',
         isSelected: true,
         isVisible: true,
@@ -49,7 +49,7 @@ export const DEFAULT_MODULES: ModuleItem[] = [
         group: MODULE_GROUPS.SELECTED,
     },
     {
-        id: 'work-experience',
+        id: 'experience',
         name: '工作经历',
         isSelected: true,
         isVisible: true,

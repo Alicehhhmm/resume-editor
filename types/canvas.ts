@@ -1,4 +1,3 @@
-import type { Template } from '@/types/resume-template'
 
 // 元素类型枚举
 export type ElementType = 'template' | 'text' | 'image' | 'shape'
@@ -61,7 +60,6 @@ export interface ShapeElementProperties {
 
 // 画布状态类型
 export interface CanvasState {
-    currentTemplate: Template
     elements: CanvasElement[]
     selectedElementIds: string[]
     zoom: number
@@ -70,8 +68,6 @@ export interface CanvasState {
 
 // 画布动作类型
 export interface CanvasActions {
-    // 模板相关操作
-    updateTemplate: (template: Template) => void
 
     // 元素操作
     addElement: (element: Omit<CanvasElement, 'id'>) => void
