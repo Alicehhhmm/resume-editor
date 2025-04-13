@@ -1,12 +1,23 @@
-import type { FC } from 'react'
+import { type FC } from 'react'
 
-import type { ResumeModule, TemplateIdType } from '@/types/resume-template'
+import type { Template, TemplateIdType } from '@/types/resume-template'
 
 import { SimpleDefault } from './simple'
 
-// TODO: more tamplate
+// TODO: more template implementations
 
-const templates = {
+/**
+ * 模板组件的通用Props类型
+ */
+export type TemplateProps = {
+    data: Template
+}
+
+/**
+ * 模板组件映射表
+ * 每种模板ID对应一个实现组件
+ */
+const TEMPLATE_COMPONENTS = {
     'simple-default': SimpleDefault,
     'simple-modern': SimpleDefault,
     'canon-classic': SimpleDefault,
@@ -15,15 +26,22 @@ const templates = {
     'creativity-minimal': SimpleDefault,
     'specialty-academic': SimpleDefault,
     'specialty-technical': SimpleDefault,
-} satisfies Record<TemplateIdType, FC>
+} satisfies Record<TemplateIdType, FC<TemplateProps>>
 
-type WithTemplateProps = {
+/**
+ * WithTemplate组件Props类型
+ */
+interface WithTemplateProps {
     templateId: TemplateIdType
-    data: ResumeModule
+    data: Template
 }
 
+/**
+ * 模板包装组件
+ * @description 根据模板ID选择并渲染相应的模板组件
+ */
 const WithTemplate: FC<WithTemplateProps> = ({ templateId, data }) => {
-    const Component: FC<{ data: ResumeModule }> = templates[templateId] ?? SimpleDefault
+    const Component = TEMPLATE_COMPONENTS[templateId] ?? SimpleDefault
 
     return <Component data={data} />
 }

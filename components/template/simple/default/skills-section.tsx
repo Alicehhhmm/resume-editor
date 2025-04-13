@@ -1,32 +1,36 @@
 import type { FC } from 'react'
+import type { Skill } from '@/types/resume'
 
 import SectionHeading from './section-heading'
-import SkillBar from './skill-bar'
 
-const skills = [
-    { name: 'JavaScript/TypeScript', level: 95 },
-    { name: 'React/Next.js', level: 90 },
-    { name: 'Node.js', level: 85 },
-    { name: 'Python', level: 80 },
-    { name: 'AWS/Cloud Services', level: 75 },
-    { name: 'Docker/Kubernetes', level: 70 },
-    { name: 'SQL/NoSQL Databases', level: 85 },
-    { name: 'CI/CD', level: 80 },
-]
+interface SkillsSectionProps {
+    skills: Skill[]
+}
 
-const SkillsSection: FC = () => {
+const SkillsSection: FC<SkillsSectionProps> = ({ skills }) => {
     return (
-        <section>
+        <section className="mb-8">
             <SectionHeading>SKILLS</SectionHeading>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {skills.map((skill, index) => (
-                    <SkillBar
-                        key={index}
-                        name={skill.name}
-                        level={skill.level}
-                    />
-                ))}
-            </div>
+            
+            {skills && skills.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {skills.map((skill, index) => (
+                        <div key={index} className="flex items-center justify-between">
+                            <span className="font-medium">{skill.name}</span>
+                            <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+                                <div 
+                                    className="h-full bg-primary" 
+                                    style={{ width: `${skill.level}%` }}
+                                ></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="text-muted-foreground italic">
+                    <p>暂无技能数据</p>
+                </div>
+            )}
         </section>
     )
 }

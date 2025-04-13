@@ -1,44 +1,46 @@
 import type { FC } from 'react'
+import type { WorkExperience } from '@/types/resume'
 
-import ExperienceItem from './experience-item'
 import SectionHeading from './section-heading'
 
-const experiences = [
-    {
-        title: 'SENIOR SOFTWARE ENGINEER',
-        company: 'Tech Innovations Inc.',
-        location: 'San Francisco, CA',
-        period: '2021 - Present',
-        achievements: [
-            'Led development of a microservices architecture that improved system reliability by 35% and reduced deployment time by 50%',
-            'Implemented CI/CD pipelines that decreased integration issues by 40% and accelerated release cycles',
-            'Mentored junior developers, conducted code reviews, and established best practices for a team of 8 engineers',
-            'Optimized database queries and API endpoints, resulting in a 60% reduction in response times',
-        ],
-    },
-    {
-        title: 'SOFTWARE ENGINEER',
-        company: 'Digital Solutions LLC',
-        location: 'Seattle, WA',
-        period: '2018 - 2021',
-        achievements: [
-            'Developed and maintained RESTful APIs serving over 10,000 daily active users',
-            'Collaborated with UX designers to implement responsive interfaces that increased user engagement by 25%',
-            'Refactored legacy codebase, reducing technical debt and improving maintainability',
-            'Participated in agile development processes, consistently delivering features on schedule',
-        ],
-    },
-]
+interface ExperienceSectionProps {
+    experiences: WorkExperience[]
+}
 
-const ExperienceSection: FC = () => {
+const ExperienceSection: FC<ExperienceSectionProps> = ({ experiences }) => {
     return (
         <section className="mb-8">
-            <SectionHeading>EXPERIENCE</SectionHeading>
-            <div className="space-y-6">
-                {experiences.map((exp, index) => (
-                    <ExperienceItem key={index} {...exp} />
-                ))}
-            </div>
+            <SectionHeading>WORK EXPERIENCE</SectionHeading>
+            
+            {experiences && experiences.length > 0 ? (
+                <div className="space-y-6">
+                    {experiences.map((job, index) => (
+                        <div key={index} className="mb-4">
+                            <div className="flex justify-between items-start mb-1">
+                                <div>
+                                    <h3 className="font-semibold text-primary">{job.title}</h3>
+                                    <p className="text-muted-foreground">{job.company}, {job.location}</p>
+                                </div>
+                                <span className="text-sm text-muted-foreground">{job.period}</span>
+                            </div>
+                            
+                            {job.achievements && job.achievements.length > 0 && (
+                                <ul className="list-disc pl-5 mt-2">
+                                    {job.achievements.map((achievement, idx) => (
+                                        <li key={idx} className="text-sm mb-1">
+                                            {achievement.description}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="text-muted-foreground italic">
+                    <p>暂无工作经历</p>
+                </div>
+            )}
         </section>
     )
 }
