@@ -1,6 +1,6 @@
 import type { Category, Template, TemplateStyle, ResumeModule } from '@/types/resume-template'
 import type { ModuleID } from '@/types/module'
-import { MODULE_GROUPS } from "@/config/modules"
+import { MODULE_GROUPS, RESUME_DEFAULT_MODULES } from "@/config/modules"
 import { resumeData } from "@/data/resume-data";
 
 /** 默认封面 */
@@ -28,19 +28,7 @@ const DEFAULT_STYLE: TemplateStyle = {
 /**
  * 默认模板，默认显示的模块
  */
-const DEFAULT_MODULES: Partial<Record<ModuleID, ResumeModule>> = {
-    'personal': {
-        module: {
-            id: 'personal',
-            name: '个人信息',
-            isSelected: true,
-            isVisible: true,
-            isFixed: true,
-            group: MODULE_GROUPS.SELECTED
-        },
-        ...resumeData['personal']
-    },
-}
+const DEFAULT_MODULES: Partial<Record<ModuleID, ResumeModule>> = RESUME_DEFAULT_MODULES
 
 /**
  * 模板分类常量

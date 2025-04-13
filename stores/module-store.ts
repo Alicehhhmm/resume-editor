@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { arrayMove } from '@dnd-kit/sortable'
 import { type DragEndEvent } from '@dnd-kit/core'
 
-import { MODULE_GROUPS, MODULE_NAME_RULES, DEFAULT_MODULES } from '@/config/modules'
+import { MODULE_GROUPS, MODULE_NAME_RULES, getVisibleModules, getAvailableModules } from '@/config/modules'
 import type { Module, ModuleState, ModuleActions, ModuleUtils } from '@/types/module'
 
 const useModuleStore = create<ModuleState & ModuleActions & ModuleUtils>()(
@@ -18,11 +18,13 @@ const useModuleStore = create<ModuleState & ModuleActions & ModuleUtils>()(
             // 初始化 store
             initializeStore: () => {
                 const { modules } = get()
+
                 if (modules.length === 0) {
-                    const selectedModules = DEFAULT_MODULES.filter(m => m.group === MODULE_GROUPS.SELECTED)
-                    const availableModules = DEFAULT_MODULES.filter(m => m.group === MODULE_GROUPS.AVAILABLE)
+                    const selectedModules = getVisibleModules()
+                    const availableModules = getAvailableModules()
+
                     set({
-                        modules: DEFAULT_MODULES,
+                        modules: [...selectedModules, ...availableModules],
                         selectedModules,
                         availableModules,
                     })
@@ -242,7 +244,7 @@ const useModuleStore = create<ModuleState & ModuleActions & ModuleUtils>()(
                 }
 
                 const newModule: Module = {
-                    id: `custom-${Date.now()}`,
+                    id: `custom`,
                     name: trimmedName,
                     group: MODULE_GROUPS.CUSTOM,
                     isFixed: false,
