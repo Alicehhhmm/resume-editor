@@ -43,11 +43,11 @@ export interface ContactInfo {
  * @property {string[]} [interests] - 兴趣爱好
  */
 export interface PersonalInfo {
-    name: string
-    title: string
+    name?: string
+    title?: string
     avatar?: string
-    contact: ContactInfo
-    profile: string
+    contact?: ContactInfo
+    profile?: string
     birthDate?: string
     nationality?: string
     maritalStatus?: 'Single' | 'Married' | 'Divorced'
@@ -364,7 +364,7 @@ export interface CustomSection {
  * @property {CustomSection[]} [customSections] - 自定义部分
  */
 
-type ModuleToDataType = {
+export type ModuleToDataType = {
     personal: PersonalInfo;
     social?: ContactInfo;
     skills?: Skill[];

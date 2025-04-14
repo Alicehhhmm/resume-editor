@@ -1,5 +1,7 @@
 import { type FC } from 'react'
 
+import { Module } from '@/types'
+
 import type { Template, TemplateIdType } from '@/types/resume-template'
 
 import { SimpleDefault } from './simple'
@@ -11,6 +13,7 @@ import { SimpleDefault } from './simple'
  */
 export type TemplateProps = {
     data: Template
+    sort?: Module[]
 }
 
 /**
@@ -34,16 +37,17 @@ const TEMPLATE_COMPONENTS = {
 interface WithTemplateProps {
     templateId: TemplateIdType
     data: Template
+    sort?: Module[]
 }
 
 /**
  * 模板包装组件
  * @description 根据模板ID选择并渲染相应的模板组件
  */
-const WithTemplate: FC<WithTemplateProps> = ({ templateId, data }) => {
+const WithTemplate: FC<WithTemplateProps> = ({ templateId, data, sort }) => {
     const Component = TEMPLATE_COMPONENTS[templateId] ?? SimpleDefault
 
-    return <Component data={data} />
+    return <Component data={data} sort={sort} />
 }
 
 export default WithTemplate
