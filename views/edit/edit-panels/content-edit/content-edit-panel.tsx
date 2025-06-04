@@ -20,7 +20,6 @@ export const ContentEditPanel: FC = () => (
 const EditPanelContent: FC = () => {
     const { visibleModules, templateTitle } = useModuleTemplate()
 
-
     return (
         <Card className="w-full rounded-none border-0">
             <CardHeader className="pb-3">
@@ -31,10 +30,10 @@ const EditPanelContent: FC = () => {
             <CardContent className="space-y-4">
                 {visibleModules.length > 0 ? (
                     <div className="space-y-8">
-                        {visibleModules.map((module) => {
+                        {visibleModules.map((module, index) => {
                             const ModuleComponent = MODULE_COMPONENTS[module.id]
 
-                            if (!ModuleComponent) return <EmptyPrompt />
+                            if (!ModuleComponent) return <EmptyPrompt key={index} />
 
                             return (
                                 <Card key={module.id} className="rounded-none border-0">

@@ -8,7 +8,7 @@ import { ToolButton, TooltipProvider } from '@/components/common/tooltip-button'
 
 import { useCanvas } from '@/hooks/use-canvas'
 
-type ToolType = 'select' | 'hand' | 'text' | 'shape' | 'image' | 'pagePreview'
+type ToolType = 'select' | 'hand' | 'text' | 'shape' | 'image' | 'pagePreview' | 'resetView' | 'selfAdaption'
 
 export function CanvasToolbar() {
     const canvas = useCanvas()
@@ -26,11 +26,24 @@ export function CanvasToolbar() {
     }, [canvas])
 
     const handleFitToScreen = useCallback(() => {
+        const perentDom = document.getElementById('canvas-html')
+        const currentElement = canvas.elements[0]
+
+        setActiveTool('selfAdaption')
         canvas.setZoom(1)
-        canvas.setPan({ x: 0, y: 0 })
+        canvas.setPan({
+            x: perentDom?.clientWidth ? perentDom?.clientWidth / 4 : 0,
+            y: 0,
+        })
+        canvas.updateElementAttributes({
+            ...currentElement,
+            // width: perentDom?.clientWidth ? perentDom?.clientWidth : currentElement.width,
+            height: perentDom?.clientHeight ? perentDom?.clientHeight : currentElement.height,
+        })
     }, [canvas])
 
     const handleResetView = useCallback(() => {
+        setActiveTool('resetView')
         canvas.resetView()
     }, [canvas])
 
@@ -60,11 +73,11 @@ export function CanvasToolbar() {
 
                     <span className="mx-2 h-full min-h-3 w-[0.5px] bg-neutral-200" />
 
-                    <ToolButton tooltip="适应屏幕 (Shift+1)" onClick={handleFitToScreen}>
+                    <ToolButton tooltip="自适应屏幕 (Shift+1)" active={activeTool === 'selfAdaption'} onClick={handleFitToScreen}>
                         <Maximize className="size-3.5" />
                     </ToolButton>
 
-                    <ToolButton tooltip="重置视图 (Shift+0)" onClick={handleResetView}>
+                    <ToolButton tooltip="重置视图 (Shift+0)" active={activeTool === 'resetView'} onClick={handleResetView}>
                         <RotateCcw className="size-3.5" />
                     </ToolButton>
 

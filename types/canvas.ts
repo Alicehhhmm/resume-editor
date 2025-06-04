@@ -91,20 +91,11 @@ export interface CanvasActions {
     setZoom: (zoom: number) => void
     setPan: (pan: { x: number; y: number }) => void
     resetView: () => void
-    pagePreview: (panels: PannelsLR) => void;
+    pagePreview: (panels: PannelsLR) => void
+
+    // 元素属性
+    updateElementAttributes: (el: CanvasElement) => void
 }
 
 // 合并状态和动作
 export type CanvasStore = CanvasState & CanvasActions
-
-// 常量定义
-export const PAPER_SIZES = {
-    A4: {
-        width: 794, // 210mm to px @96dpi
-        height: 1123, // 297mm to px @96dpi
-    },
-    LETTER: {
-        width: 816, // 8.5in to px @96dpi
-        height: 1056, // 11in to px @96dpi
-    },
-} 

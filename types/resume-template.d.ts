@@ -1,3 +1,4 @@
+import type { CanvasElement } from '@/types/canvas'
 import type { Module, ModuleID } from '@/types/module'
 import type {
     PersonalInfo,

@@ -1,20 +1,13 @@
 import type { FC } from 'react'
 
+import type { WorkExperience } from '@/types/resume'
+
 interface ExperienceItemProps {
-    title: string
-    company: string
-    location: string
-    period: string
-    achievements: string[]
+    data: WorkExperience[]
 }
 
-const ExperienceItem: FC<ExperienceItemProps> = ({
-    title,
-    company,
-    location,
-    period,
-    achievements,
-}) => {
+const ExperienceItem: FC<ExperienceItemProps> = ({ data }) => {
+    const { title, company, location, period, achievements } = data[0]
     return (
         <div>
             <div className="mb-2">
@@ -29,7 +22,7 @@ const ExperienceItem: FC<ExperienceItemProps> = ({
             <ul className="list-disc pl-5 space-y-1">
                 {achievements.map((achievement, index) => (
                     <li key={index} className="text-sm">
-                        {achievement}
+                        {achievement.description}
                     </li>
                 ))}
             </ul>

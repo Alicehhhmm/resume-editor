@@ -23,7 +23,9 @@ export const createCanvasStore = (initState: CanvasState = defaultInitState) => 
         // 元素操作
         addElement: (element) =>
             set((state) => ({
-                elements: [...state.elements, { ...element, id: crypto.randomUUID() }]
+                elements: ['template'].includes(element.type)
+                    ? [{ ...element, id: crypto.randomUUID() }]
+                    : [...state.elements, { ...element, id: crypto.randomUUID() }]
             })),
 
         updateElement: (id, updates) =>
@@ -38,6 +40,14 @@ export const createCanvasStore = (initState: CanvasState = defaultInitState) => 
                 elements: state.elements.filter((el) => el.id !== id),
                 selectedElementIds: state.selectedElementIds.filter((elId) => elId !== id)
             })),
+
+        updateElementAttributes: (el) => set((state) => {
+            const newArt = state.elements.filter((item) => item.id === el.id)
+
+            return {
+                elements: newArt
+            }
+        }),
 
         // 选择操作
         selectElement: (id) =>
@@ -69,6 +79,8 @@ export const createCanvasStore = (initState: CanvasState = defaultInitState) => 
                 ...panels
             }
         })),
+
+
     }))
 }
 

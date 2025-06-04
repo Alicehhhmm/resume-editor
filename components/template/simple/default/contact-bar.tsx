@@ -2,19 +2,15 @@ import type { FC } from 'react'
 
 import { Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 
+import { ContactInfo } from '@/types'
+
 interface ContactBarProps {
-    phone: string
-    email: string
-    location: string
-    linkedin: string
+    data: ContactInfo
 }
 
-const ContactBar: FC<ContactBarProps> = ({
-    phone,
-    email,
-    location,
-    linkedin,
-}) => {
+const ContactBar: FC<ContactBarProps> = ({ data }) => {
+    const { phone, email, location, linkedin } = data
+
     return (
         <div className="bg-muted px-8 py-3 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
             <div className="flex items-center gap-1">

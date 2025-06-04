@@ -2,7 +2,7 @@
 
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import { PAPER_SIZES } from '@/types/canvas'
+import { PAPER_SIZES } from '@/lib/constant'
 
 import { useCanvas } from '@/hooks/use-canvas'
 
@@ -17,6 +17,7 @@ export function Draw({ children }: DrawProps) {
     const [isDragging, setIsDragging] = useState(false)
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
     const [spaceKeyDown, setSpaceKeyDown] = useState(false)
+    console.log('drawcanvas', canvas.elements)
 
     // 监听空格键按下/松开事件，实现临时切换到拖动模式的功能
     useEffect(() => {
@@ -55,11 +56,7 @@ export function Draw({ children }: DrawProps) {
             if (!rect) return
 
             // 如果按下了空格键，或者是画布背景被点击
-            if (
-                spaceKeyDown ||
-                e.target === e.currentTarget ||
-                e.target === viewportRef.current
-            ) {
+            if (spaceKeyDown || e.target === e.currentTarget || e.target === viewportRef.current) {
                 e.preventDefault() // 防止选择文本
                 setIsDragging(true)
                 setDragStart({ x: e.clientX, y: e.clientY })
@@ -103,9 +100,7 @@ export function Draw({ children }: DrawProps) {
 
             // 根据空格键是否按下决定鼠标样式
             if (canvasRef.current) {
-                canvasRef.current.style.cursor = spaceKeyDown
-                    ? 'grab'
-                    : 'default'
+                canvasRef.current.style.cursor = spaceKeyDown ? 'grab' : 'default'
             }
         }
     }, [isDragging, spaceKeyDown])
@@ -118,10 +113,7 @@ export function Draw({ children }: DrawProps) {
 
             // 计算缩放因子
             const delta = e.deltaY * -0.002
-            const newZoom = Math.max(
-                0.1,
-                Math.min(4, canvas.zoom * (1 + delta))
-            )
+            const newZoom = Math.max(0.1, Math.min(4, canvas.zoom * (1 + delta)))
 
             // 获取鼠标在画布中的位置
             const rect = canvasRef.current?.getBoundingClientRect()
@@ -172,8 +164,8 @@ export function Draw({ children }: DrawProps) {
                     transform: `scale(${canvas.zoom}) translate(${canvas.pan.x}px, ${canvas.pan.y}px)`,
                     transformOrigin: 'center',
                     willChange: 'transform',
-                    width: `${PAPER_SIZES.A4.width}px`,
-                    height: `${PAPER_SIZES.A4.height}px`,
+                    width: `${canvas.elements[0]?.width ?? PAPER_SIZES.A4.width}px`,
+                    height: `${canvas.elements[0]?.height ?? PAPER_SIZES.A4.height}px`,
                 }}
                 onClick={(e) => {
                     e.stopPropagation()

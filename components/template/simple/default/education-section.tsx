@@ -1,17 +1,19 @@
 import type { FC } from 'react'
+
 import type { Education } from '@/types/resume'
 
 import SectionHeading from './section-heading'
 
 interface EducationSectionProps {
-    educations: Education[]
+    data: Education[]
 }
 
-const EducationSection: FC<EducationSectionProps> = ({ educations }) => {
+const EducationSection: FC<EducationSectionProps> = ({ data }) => {
+    const educations = Object.entries(data).map((item) => item[1])
     return (
         <section className="mb-8">
             <SectionHeading>EDUCATION</SectionHeading>
-            
+
             {educations && educations.length > 0 ? (
                 <div className="space-y-4">
                     {educations.map((edu, index) => (

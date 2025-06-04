@@ -1,29 +1,34 @@
 import type { FC } from 'react'
+
 import type { WorkExperience } from '@/types/resume'
 
 import SectionHeading from './section-heading'
 
-interface ExperienceSectionProps {
-    experiences: WorkExperience[]
+interface ExperienceectionProps {
+    data: WorkExperience[]
 }
 
-const ExperienceSection: FC<ExperienceSectionProps> = ({ experiences }) => {
+const Experienceection: FC<ExperienceectionProps> = ({ data }) => {
+    const experience = Object.entries(data).map((item) => item[1])
+
     return (
         <section className="mb-8">
             <SectionHeading>WORK EXPERIENCE</SectionHeading>
-            
-            {experiences && experiences.length > 0 ? (
+
+            {experience && experience.length > 0 ? (
                 <div className="space-y-6">
-                    {experiences.map((job, index) => (
+                    {experience.map((job, index) => (
                         <div key={index} className="mb-4">
                             <div className="flex justify-between items-start mb-1">
                                 <div>
                                     <h3 className="font-semibold text-primary">{job.title}</h3>
-                                    <p className="text-muted-foreground">{job.company}, {job.location}</p>
+                                    <p className="text-muted-foreground">
+                                        {job.company}, {job.location}
+                                    </p>
                                 </div>
                                 <span className="text-sm text-muted-foreground">{job.period}</span>
                             </div>
-                            
+
                             {job.achievements && job.achievements.length > 0 && (
                                 <ul className="list-disc pl-5 mt-2">
                                     {job.achievements.map((achievement, idx) => (
@@ -45,4 +50,4 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({ experiences }) => {
     )
 }
 
-export default ExperienceSection
+export default Experienceection

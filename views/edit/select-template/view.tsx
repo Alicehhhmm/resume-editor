@@ -11,6 +11,8 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import type { Category, Template } from '@/types/resume-template'
 
+import { PAPER_SIZES } from '@/lib/constant'
+
 import { InfiniteScroll } from '@/components/common'
 import { FilterCarousel } from '@/components/filter-carousel'
 
@@ -52,7 +54,7 @@ export const TemplateView = ({ templateId }: TemplateViewProps) => {
 const TemplateViewSuspense = () => {
     const router = useRouter()
     const canvas = useCanvas()
-    const { selectTemplate } = useResumeTemplate()
+    const { currentTemplate, selectTemplate } = useResumeTemplate()
 
     const [categoryId, setCategoryId] = useState<Category>('all')
     const [selectedId, setSelectedId] = useState<string>()
@@ -85,6 +87,14 @@ const TemplateViewSuspense = () => {
 
         // 更新到模板整体管理
         selectTemplate(template.id)
+        canvas.addElement({
+            ...template,
+            type: 'template',
+            x: 0,
+            y: 0,
+            width: PAPER_SIZES.A4.width,
+            height: PAPER_SIZES.A4.height,
+        } as any)
     }
 
     useEffect(() => {
