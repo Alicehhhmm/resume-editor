@@ -8,7 +8,11 @@ export const defaultInitState: CanvasState = {
     elements: [],
     selectedElementIds: [],
     zoom: 1,
-    pan: { x: 0, y: 0 }
+    pan: { x: 0, y: 0 },
+    panels: {
+        leftHide: false,
+        rightHide: false
+    }
 }
 
 // Store 工厂函数
@@ -57,7 +61,14 @@ export const createCanvasStore = (initState: CanvasState = defaultInitState) => 
 
         setPan: (pan) => set({ pan }),
 
-        resetView: () => set({ zoom: 1, pan: { x: 0, y: 0 } })
+        resetView: () => set({ zoom: 1, pan: { x: 0, y: 0 } }),
+
+        pagePreview: (panels) => set((state) => ({
+            panels: {
+                ...state.panels,
+                ...panels
+            }
+        })),
     }))
 }
 

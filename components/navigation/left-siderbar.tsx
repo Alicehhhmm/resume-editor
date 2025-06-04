@@ -1,14 +1,18 @@
-import type { ReactNode } from 'react'
+'use client'
+
+import type { FC, ReactNode } from 'react'
 
 import { CollapsedWrapper } from '@/components/common'
 
 interface LeftSiderbarProps {
+    hide?: boolean
+    onToggle?: (collapsed: boolean) => void
     children: ReactNode
 }
 
-export const LeftSiderbar = ({ children }: LeftSiderbarProps) => {
+export const LeftSiderbar: FC<LeftSiderbarProps> = ({ children, hide = false, onToggle }) => {
     return (
-        <CollapsedWrapper collapsedWidth={0} resizable position="left">
+        <CollapsedWrapper collapsedWidth={0} expandedWidth={320} resizable position="left" collapsed={hide} onCollapsedChange={onToggle}>
             {children}
         </CollapsedWrapper>
     )

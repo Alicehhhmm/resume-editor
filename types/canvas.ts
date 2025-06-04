@@ -14,6 +14,12 @@ export interface CanvasElement {
     properties: Record<string, any>
 }
 
+// 侧边栏面板状态
+export interface PannelsLR {
+    leftHide?: boolean
+    rightHide?: boolean
+}
+
 // 模板元素特有属性
 export interface TemplateElementProperties {
     templateId: string
@@ -64,6 +70,7 @@ export interface CanvasState {
     selectedElementIds: string[]
     zoom: number
     pan: { x: number; y: number }
+    panels: PannelsLR
 }
 
 // 画布动作类型
@@ -84,6 +91,7 @@ export interface CanvasActions {
     setZoom: (zoom: number) => void
     setPan: (pan: { x: number; y: number }) => void
     resetView: () => void
+    pagePreview: (panels: PannelsLR) => void;
 }
 
 // 合并状态和动作

@@ -2,16 +2,18 @@
 
 import { useCallback, useState } from 'react'
 
-import { Hand, Maximize, Minus, Plus, RotateCcw } from 'lucide-react'
+import { Expand, Hand, Maximize, Minus, Plus, RotateCcw, Shrink } from 'lucide-react'
 
-import { ToolButton,TooltipProvider } from '@/components/common/tooltip-button'
+import { ToolButton, TooltipProvider } from '@/components/common/tooltip-button'
 
 import { useCanvas } from '@/hooks/use-canvas'
 
-type ToolType = 'select' | 'hand' | 'text' | 'shape' | 'image'
+type ToolType = 'select' | 'hand' | 'text' | 'shape' | 'image' | 'pagePreview'
 
 export function CanvasToolbar() {
     const canvas = useCanvas()
+    const { leftHide, rightHide } = canvas.panels
+
     const [activeTool, setActiveTool] = useState<ToolType>('select')
 
     // 缩放控制
@@ -32,6 +34,15 @@ export function CanvasToolbar() {
         canvas.resetView()
     }, [canvas])
 
+    const isShrink = leftHide && rightHide
+    const handlePreview = useCallback(() => {
+        setActiveTool('pagePreview')
+        canvas.pagePreview({
+            leftHide: !canvas.panels.leftHide,
+            rightHide: !canvas.panels.rightHide,
+        })
+    }, [canvas])
+
     return (
         <>
             {/* 底部工具栏 - 缩放控制 */}
@@ -41,9 +52,7 @@ export function CanvasToolbar() {
                         <Minus className="size-3.5" />
                     </ToolButton>
 
-                    <div className="px-2 text-xs font-medium tabular-nums select-none">
-                        {Math.round(canvas.zoom * 100)}%
-                    </div>
+                    <div className="px-2 text-xs font-medium tabular-nums select-none">{Math.round(canvas.zoom * 100)}%</div>
 
                     <ToolButton tooltip="放大 (Ctrl++)" onClick={handleZoomIn}>
                         <Plus className="size-3.5" />
@@ -51,26 +60,20 @@ export function CanvasToolbar() {
 
                     <span className="mx-2 h-full min-h-3 w-[0.5px] bg-neutral-200" />
 
-                    <ToolButton
-                        tooltip="适应屏幕 (Shift+1)"
-                        onClick={handleFitToScreen}
-                    >
+                    <ToolButton tooltip="适应屏幕 (Shift+1)" onClick={handleFitToScreen}>
                         <Maximize className="size-3.5" />
                     </ToolButton>
 
-                    <ToolButton
-                        tooltip="重置视图 (Shift+0)"
-                        onClick={handleResetView}
-                    >
+                    <ToolButton tooltip="重置视图 (Shift+0)" onClick={handleResetView}>
                         <RotateCcw className="size-3.5" />
                     </ToolButton>
 
-                    <ToolButton
-                        tooltip="抓手工具 (H)"
-                        active={activeTool === 'hand'}
-                        onClick={() => setActiveTool('hand')}
-                    >
+                    <ToolButton tooltip="抓手工具 (H)" active={activeTool === 'hand'} onClick={() => setActiveTool('hand')}>
                         <Hand className="size-3.5" />
+                    </ToolButton>
+
+                    <ToolButton tooltip="纯净预览模式 (w)" active={activeTool === 'pagePreview'} onClick={handlePreview}>
+                        {isShrink ? <Shrink className="size-3.5" /> : <Expand className="size-3.5" />}
                     </ToolButton>
                 </TooltipProvider>
             </div>
